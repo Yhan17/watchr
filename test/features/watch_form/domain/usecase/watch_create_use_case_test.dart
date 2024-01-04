@@ -1,27 +1,28 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:watchr/app/core/domain/entities/watch_entity.dart';
 import 'package:watchr/app/core/domain/failures/failures.dart';
-import 'package:watchr/app/features/create_watch/domain/service/watch_create_service.dart';
+import 'package:watchr/app/features/watch_form/domain/service/watch_create_service.dart';
+import 'package:watchr/app/features/watch_form/domain/usecase/watch_create_use_case.dart';
 
-class MockFile extends Mock implements File {}
+import '../../../../core/providers/service_provider_test.dart';
 
 class MockWatchCreateService extends Mock implements WatchCreateService {}
 
 void main() {
-  group('WatchCreateService', () {
+  group('WatchCreateUseCase', () {
+    late WatchCreateUseCase watchCreateUseCase;
     late MockWatchCreateService mockWatchCreateService;
     late MockFile mockFile;
 
     setUp(() {
       mockWatchCreateService = MockWatchCreateService();
+      watchCreateUseCase = WatchCreateUseCase(mockWatchCreateService);
       mockFile = MockFile();
     });
 
-    test('saveWatchInFirestore calls the correct methods', () async {
+    test('calls saveWatchInFirestore on WatchCreateService', () async {
       final entity = WatchEntity(
         id: 'mocked_id',
         name: 'mocked_name',
@@ -35,19 +36,21 @@ void main() {
         updatedAt: DateTime.now(),
       );
 
-      when(() => mockWatchCreateService.saveWatchInFirestore(
-            entity,
-            mockFile,
-          )).thenAnswer((_) async => const Right(unit));
+      final params = WatchCreateParams(entity: entity, file: mockFile);
 
-      final result =
-          await mockWatchCreateService.saveWatchInFirestore(entity, mockFile);
+      when(() => mockWatchCreateService.saveWatchInFirestore(entity, mockFile))
+          .thenAnswer((_) async => const Right(unit));
+
+      final result = await watchCreateUseCase(params);
+
+      verify(
+        () => mockWatchCreateService.saveWatchInFirestore(
+          entity,
+          mockFile,
+        ),
+      ).called(1);
 
       expect(result, isA<Right<Failures, Unit>>());
-
-      verify(() =>
-              mockWatchCreateService.saveWatchInFirestore(entity, mockFile))
-          .called(1);
     });
   });
 }

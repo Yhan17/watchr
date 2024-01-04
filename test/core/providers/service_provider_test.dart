@@ -18,6 +18,7 @@ import 'package:watchr/app/core/providers/core_providers.dart';
 import 'package:watchr/app/core/providers/service_provider.dart';
 import 'package:watchr/app/features/home/domain/services/delete_watch_service.dart';
 import 'package:watchr/app/features/home/infra/service/delete_watch_service_impl.dart';
+import 'package:watchr/app/features/watch_form/infra/service/watch_edit_service_impl.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -38,21 +39,17 @@ class MockDocumentReference extends Mock
 void main() {
   group('AuthService Provider', () {
     test('AuthService Provider initializes AuthServiceImpl', () {
-      // Configurar o mock
       final mockFirebaseAuth = MockFirebaseAuth();
       when(() => mockFirebaseAuth.currentUser).thenReturn(null);
       when(() => mockFirebaseAuth.authStateChanges())
           .thenAnswer((_) => const Stream.empty());
 
-      // Sobrescrever o provedor para usar o mock
       final container = ProviderContainer(overrides: [
         firebaseAuthProvider.overrideWithValue(mockFirebaseAuth),
       ]);
 
-      // Obter a instância do serviço de autenticação do provedor
       final authService = container.read(authServiceProvider);
 
-      // Verificar se a instância obtida é do tipo correto
       expect(authService, isA<AuthService>());
       expect(authService, isA<AuthServiceImpl>());
     });
@@ -80,7 +77,6 @@ void main() {
         ),
       ).thenAnswer((_) => Future.value('path'));
 
-      // Registrar os mocks no contêiner
       container.read(firestoreProvider);
       container.read(watchStorageProvider);
       container.read(uuidProvider);
@@ -89,7 +85,6 @@ void main() {
       final date = DateTime.now();
 
       final watchEntity = WatchEntity(
-        // Preencher os campos necessários do WatchEntity
         id: 'mocked_id',
         name: 'mocked_name',
         description: 'mocked_description',
@@ -114,7 +109,6 @@ void main() {
         mockFile,
       );
 
-      // Verificar os resultados ou interações conforme necessário
       expect(result, isA<Right<Failures, Unit>>());
       verify(() => watchCreateService.saveWatchInFirestore(
             watchEntity,
@@ -125,18 +119,83 @@ void main() {
 
   group('deleteWatchServiceProvider', () {
     test('should provide DeleteWatchService instance', () {
-      // Arrange
       final mockFirestore = MockFirestore();
       final container = ProviderContainer(overrides: [
         firestoreProvider.overrideWithValue(mockFirestore),
       ]);
 
-      // Act
       final deleteWatchService = container.read(deleteWatchServiceProvider);
 
-      // Assert
       expect(deleteWatchService, isA<DeleteWatchServiceImpl>());
       expect(deleteWatchService, isA<DeleteWatchService>());
+    });
+  });
+
+  group('editWatchServiceProvider', () {
+    test('should provide WatchEditService instance', () async {
+      // Arrange
+      final mockFirestore = MockFirestore();
+      final mockWatchStorage = MockWatchStorage();
+      final mockFile = MockFile();
+      final mockCollectionReference = MockCollectionReference();
+      final mockDocumentReference = MockDocumentReference();
+      final container = ProviderContainer(overrides: [
+        firestoreProvider.overrideWithValue(mockFirestore),
+        watchStorageProvider.overrideWithValue(mockWatchStorage),
+      ]);
+
+      when(
+        () => mockWatchStorage.uploadImage(
+          uuid: 'mocked_uuid',
+          image: mockFile,
+        ),
+      ).thenAnswer((_) => Future.value('path'));
+      when(
+        () => mockWatchStorage.deleteImage(
+          'mocked_uuid',
+        ),
+      ).thenAnswer((_) => Future.value());
+
+      container.read(firestoreProvider);
+      container.read(watchStorageProvider);
+
+      final editWatchService = container.read(editWatchServiceProvider);
+      final date = DateTime.now();
+
+      final watchEntity = WatchEntity(
+        id: 'mocked_id',
+        name: 'mocked_name',
+        description: 'mocked_description',
+        price: 123.45,
+        stockQuantity: 10,
+        code: 'mocked_code',
+        imageStoragePath: 'mocked_path',
+        userId: 'mocked_user_id',
+        createdAt: date,
+        updatedAt: date,
+      );
+      when(() => mockFirestore.collection('watches'))
+          .thenReturn(mockCollectionReference);
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+      when(
+        () => mockDocumentReference.update(any()),
+      ).thenAnswer((_) => Future.value());
+      final result = await editWatchService.editWatch(
+        'mocked_uuid',
+        mockFile,
+        watchEntity,
+      );
+      // Assert
+      expect(editWatchService, isA<WatchEditServiceImpl>());
+      expect(result, isA<Right<Failures, Unit>>());
+      verify(
+        () => editWatchService.editWatch(
+          'mocked_uuid',
+          mockFile,
+          watchEntity,
+        ),
+      ).called(1);
     });
   });
 }

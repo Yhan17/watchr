@@ -17,4 +17,8 @@ class WatchStorage {
 
     return result.ref.fullPath;
   }
+
+  Future<void> deleteImage(String id) async {
+    await _firebaseStorage.ref().child('watches/$id').delete();
+  }
 }
