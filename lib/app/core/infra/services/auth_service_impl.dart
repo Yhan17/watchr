@@ -7,7 +7,7 @@ import 'package:dartz/dartz.dart';
 import '../../domain/services/auth_service.dart';
 import '../../domain/value_objects/email_address/email_address_value.dart';
 import '../../domain/value_objects/password/password_value.dart';
-import '../dtos/user/user_dto.dart';
+import '../dtos/user_dto.dart';
 
 class AuthServiceImpl implements AuthService {
   final FirebaseAuth _firebaseAuth;
