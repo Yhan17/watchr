@@ -2,7 +2,9 @@ import 'package:riverpod/riverpod.dart';
 
 import '../../features/create_watch/domain/service/watch_create_service.dart';
 import '../../features/create_watch/infra/service/watch_create_service_impl.dart';
+import '../../features/home/domain/services/delete_watch_service.dart';
 import '../../features/home/domain/services/watches_service.dart';
+import '../../features/home/infra/service/delete_watch_service_impl.dart';
 import '../../features/home/infra/service/watches_service_impl.dart';
 import '../domain/services/auth_service.dart';
 import '../infra/services/auth_service_impl.dart';
@@ -25,6 +27,12 @@ final watchCreateServiceProvider = Provider.autoDispose<WatchCreateService>(
 final watchesServiceProvider = Provider.autoDispose<WatchesService>(
   (ref) => WatchesServiceImpl(
     ref.read(firebaseAuthProvider),
+    ref.read(firestoreProvider),
+  ),
+);
+
+final deleteWatchServiceProvider = Provider.autoDispose<DeleteWatchService>(
+  (ref) => DeleteWatchServiceImpl(
     ref.read(firestoreProvider),
   ),
 );

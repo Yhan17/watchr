@@ -16,6 +16,8 @@ import 'package:watchr/app/core/infra/firebase/watch_storage.dart';
 import 'package:watchr/app/core/infra/services/auth_service_impl.dart';
 import 'package:watchr/app/core/providers/core_providers.dart';
 import 'package:watchr/app/core/providers/service_provider.dart';
+import 'package:watchr/app/features/home/domain/services/delete_watch_service.dart';
+import 'package:watchr/app/features/home/infra/service/delete_watch_service_impl.dart';
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
@@ -118,6 +120,23 @@ void main() {
             watchEntity,
             mockFile,
           )).called(1);
+    });
+  });
+
+  group('deleteWatchServiceProvider', () {
+    test('should provide DeleteWatchService instance', () {
+      // Arrange
+      final mockFirestore = MockFirestore();
+      final container = ProviderContainer(overrides: [
+        firestoreProvider.overrideWithValue(mockFirestore),
+      ]);
+
+      // Act
+      final deleteWatchService = container.read(deleteWatchServiceProvider);
+
+      // Assert
+      expect(deleteWatchService, isA<DeleteWatchServiceImpl>());
+      expect(deleteWatchService, isA<DeleteWatchService>());
     });
   });
 }
