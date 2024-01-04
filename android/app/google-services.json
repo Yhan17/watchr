@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "73771711873",
+    "project_id": "watch-registration",
+    "storage_bucket": "watch-registration.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73771711873:android:98366adf743bc0df0f3c80",
+        "android_client_info": {
+          "package_name": "com.nunes.watchr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo6u7Dsxhk_hbYy1r3BqbisBNzbs-_498"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

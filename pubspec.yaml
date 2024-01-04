@@ -1,0 +1,37 @@
+name: watchr
+description: "Challenge Project"
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: '>=3.2.1 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter  # Framework Flutter
+  flutter_hooks: ^0.18.6  # Pacote de hooks para Flutter
+  riverpod: ^2.3.6  # Biblioteca de gerenciamento de estado
+  hooks_riverpod: ^2.3.6  # Hooks para Riverpod
+  firebase_core: ^2.24.2  # Integração do Firebase para inicialização do core
+  firebase_storage: ^11.5.6  # Integração do Firebase para armazenamento
+  firebase_auth: ^4.15.3  # Integração do Firebase para autenticação
+  cloud_firestore: ^4.13.6  # Integração do Firebase para banco de dados Firestore
+  dio: ^5.4.0  # Cliente HTTP para Dart
+  lottie: ^2.7.0  # Renderizador de animações Lottie para Flutter
+  google_fonts: ^6.1.0  # Pacote para uso de fontes do Google Fonts
+  uuid: ^4.3.1  # Pacote para geração de UUIDs
+  freezed_annotation: ^2.4.1  # Anotações para uso com o pacote Freezed
+  dartz: ^0.10.1  # Biblioteca de funcionalidades para Dart
+  equatable: ^2.0.5  # Facilita a implementação de métodos `equals` e `hashCode`
+  rxdart: ^0.27.7  # Programação reativa para Dart
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter  # Pacote de testes para Flutter
+  flutter_lints: ^2.0.0  # Conjunto de regras de linting recomendadas para Flutter
+  freezed: ^2.4.6  # Gerador de código para imutabilidade em Dart
+  mocktail: ^1.0.2  # Ferramenta para criar mocks de forma concisa
+  flutter_launcher_icons: ^0.13.1  # Ferramenta para definir ícones de aplicativos Flutter
+
+flutter:
+  uses-material-design: true  # Indica o uso do Material Design no aplicativo
