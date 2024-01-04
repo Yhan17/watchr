@@ -1,7 +1,8 @@
 import 'package:riverpod/riverpod.dart';
 
-import '../../features/create_watch/domain/usecase/watch_create_use_case.dart';
+import '../../features/watch_form/domain/usecase/watch_create_use_case.dart';
 import '../../features/home/domain/usecase/watches_list_use_case.dart';
+import '../../features/watch_form/domain/usecase/watch_edit_use_case.dart';
 import '../domain/usecases/sign_in_email_and_password_use_case.dart';
 import '../domain/usecases/sign_up_email_and_password_use_case.dart';
 import 'service_provider.dart';
@@ -27,5 +28,11 @@ final watchesCreateUseCaseProvider = Provider.autoDispose(
 final watchesListUseCaseProvider = Provider.autoDispose(
   (ref) => WatchesListUseCase(
     ref.read(watchesServiceProvider),
+  ),
+);
+
+final editWatchUseCaseProvider = Provider.autoDispose(
+  (ref) => WatchEditUseCase(
+    ref.read(editWatchServiceProvider),
   ),
 );

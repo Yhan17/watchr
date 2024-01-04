@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'package:watchr/app/core/domain/entities/watch_entity.dart';
 import 'package:watchr/app/core/domain/failures/failures.dart';
 import 'package:watchr/app/core/infra/firebase/watch_storage.dart';
-import 'package:watchr/app/features/create_watch/infra/service/watch_create_service_impl.dart';
+import 'package:watchr/app/features/watch_form/infra/service/watch_create_service_impl.dart';
 
 class MockUuid extends Mock implements Uuid {}
 
