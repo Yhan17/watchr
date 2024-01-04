@@ -19,11 +19,12 @@ dependencies:
   dio: ^5.4.0  # Cliente HTTP para Dart
   lottie: ^2.7.0  # Renderizador de animações Lottie para Flutter
   google_fonts: ^6.1.0  # Pacote para uso de fontes do Google Fonts
-  uuid: ^4.3.1  # Pacote para geração de UUIDs
+  uuid: ^4.2.2  # Pacote para geração de UUIDs
   freezed_annotation: ^2.4.1  # Anotações para uso com o pacote Freezed
   dartz: ^0.10.1  # Biblioteca de funcionalidades para Dart
   equatable: ^2.0.5  # Facilita a implementação de métodos `equals` e `hashCode`
   rxdart: ^0.27.7  # Programação reativa para Dart
+  jwt_decoder: ^2.0.1 #Decoder JWT
 
 dev_dependencies:
   flutter_test:
