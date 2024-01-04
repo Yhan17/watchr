@@ -15,6 +15,12 @@ abstract class UseCaseWithFailure<F extends Failures, Type, Params>
   Future<Either<F, Type>> call(Params params);
 }
 
+abstract class UseCaseStream<F extends Failures, Type, Params> {
+  const UseCaseStream();
+
+  Stream<Either<F, Type>> call(Params params);
+}
+
 class NoParams {
   const NoParams();
 }
