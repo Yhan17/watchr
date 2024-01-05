@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../core/presentation/routes/app_routes.dart';
 import '../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../core/presentation/shared/theme/app_images.dart';
@@ -46,12 +47,17 @@ class OnboardingPage extends HookWidget {
             ),
             AppSpacing.vertical(48),
             Hero(
-              tag: 'teste',
+              tag: 'button-animation',
               child: Row(
                 children: [
                   Expanded(
                     child: WatchButtonTextWidget(
-                      onTap: () {},
+                      onTap: () {
+                        AppRoutes.login.pushReplacement(
+                          context,
+                          arguments: noArgs,
+                        );
+                      },
                       text: 'Get Started',
                     ),
                   )

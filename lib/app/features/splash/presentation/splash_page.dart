@@ -26,7 +26,7 @@ class SplashPage extends HookWidget {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: Hero(
-          tag: 'teste',
+          tag: 'button-animation',
           child: Container(
             color: AppColors.golden,
             child: Center(
