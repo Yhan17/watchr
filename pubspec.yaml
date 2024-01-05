@@ -36,3 +36,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true  # Indica o uso do Material Design no aplicativo
+
+  assets:
+    - assets/animations/
+    - assets/images/
