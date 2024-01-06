@@ -22,7 +22,10 @@ class OnboardingPage extends HookWidget {
         ),
         child: Column(
           children: [
-            Image.asset(AppImages.onboardingWatch),
+            Hero(
+              tag: 'watch-onboarding',
+              child: Image.asset(AppImages.onboardingWatch),
+            ),
             AppSpacing.vertical(20),
             Text.rich(
               TextSpan(
