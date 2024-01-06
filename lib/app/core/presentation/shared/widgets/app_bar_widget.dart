@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../core/presentation/shared/theme/app_colors.dart';
-import '../../../../core/presentation/shared/widgets/app_bar_button_widget.dart';
+import '../theme/app_colors.dart';
+import 'app_bar_button_widget.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key});
