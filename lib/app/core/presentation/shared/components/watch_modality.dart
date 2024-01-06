@@ -9,6 +9,7 @@ abstract class WatchModality<T> extends HookConsumerWidget {
   final EdgeInsets contentPadding;
   final Key? scaffoldKey;
   final String? name;
+  final Color modalityColor;
   const WatchModality({
     this.scaffoldKey,
     this.name,
@@ -16,6 +17,7 @@ abstract class WatchModality<T> extends HookConsumerWidget {
       vertical: 20,
     ),
     this.isScrollControlled = true,
+    this.modalityColor = AppColors.modalityColor,
     super.key,
   });
 
@@ -28,9 +30,9 @@ abstract class WatchModality<T> extends HookConsumerWidget {
       duration: const Duration(milliseconds: 200),
       curve: Curves.decelerate,
       constraints: BoxConstraints(maxHeight: windowMediaQuery.size.height * .9),
-      decoration: const BoxDecoration(
-        color: AppColors.modalityColor,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: modalityColor,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24),
           topRight: Radius.circular(24),
         ),

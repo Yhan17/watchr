@@ -1,3 +1,4 @@
+import '../../../features/home/presentation/home_page.dart';
 import '../../../features/login/presentation/login_page.dart';
 import '../../../features/onboarding/presentation/onboarding_page.dart';
 import '../../../features/splash/presentation/splash_page.dart';
@@ -21,10 +22,15 @@ abstract class AppRoutes {
     path: '/login',
     pageBuilder: (_) => const LoginPage(),
   );
+  static final home = AppPageRoute<NoArgs>(
+    path: '/home',
+    pageBuilder: (_) => const HomePage(),
+  );
 
   static final routes = routeMapFrom([
     splash,
     onboarding,
     login,
+    home,
   ]);
 }
