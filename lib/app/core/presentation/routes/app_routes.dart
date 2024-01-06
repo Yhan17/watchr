@@ -1,3 +1,4 @@
+import '../../../features/login/presentation/login_page.dart';
 import '../../../features/onboarding/presentation/onboarding_page.dart';
 import '../../../features/splash/presentation/splash_page.dart';
 import '../router/animations/slide_transition_animation.dart';
@@ -16,9 +17,14 @@ abstract class AppRoutes {
     pageBuilder: (_) => const OnboardingPage(),
     routeTransition: SlideTransitionAnimation(),
   );
+  static final login = AppPageRoute<NoArgs>(
+    path: '/login',
+    pageBuilder: (_) => const LoginPage(),
+  );
 
   static final routes = routeMapFrom([
     splash,
     onboarding,
+    login,
   ]);
 }

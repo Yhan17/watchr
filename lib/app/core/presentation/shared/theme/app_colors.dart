@@ -18,4 +18,13 @@ class AppColors {
 
   /// ![](https://singlecolorimage.com/get/F24E1E/400x40)
   static const Color darkOrange = Color(0xFFF24E1E);
+
+  /// ![](https://singlecolorimage.com/get/B3B3B3/400x40)
+  static const Color innerInputColor = Color(0xFFB3B3B3);
+
+  /// ![](https://singlecolorimage.com/get/3C3939/400x40)
+  static const Color inputColor = Color(0xFF3C3939);
+
+  /// ![](https://singlecolorimage.com/get/202020/400x40)
+  static const Color modalityColor = Color(0xFF202020);
 }

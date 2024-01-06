@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -10,6 +9,7 @@ class WatchButtonIconWidget extends HookWidget {
   final double size;
   final Color backgroundColor;
   final Color iconColor;
+  final bool busy;
 
   const WatchButtonIconWidget({
     Key? key,
@@ -18,12 +18,11 @@ class WatchButtonIconWidget extends HookWidget {
     this.size = 20,
     this.backgroundColor = AppColors.golden,
     this.iconColor = Colors.white,
+    this.busy = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = useState<bool>(false);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
@@ -48,25 +47,25 @@ class WatchButtonIconWidget extends HookWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(16),
           ),
-          onTap: onTap != null
-              ? () {
-                  isLoading.value = true;
-                  onTap!();
-                  isLoading.value = false;
-                }
-              : null,
+          onTap: onTap != null && !busy ? onTap! : null,
           child: Container(
             padding: EdgeInsets.symmetric(
               vertical: size - 2,
               horizontal: size,
             ),
             child: Center(
-              child: !isLoading.value
+              child: !busy
                   ? Icon(
                       icon,
                       color: iconColor,
                     )
-                  : const CircularProgressIndicator(color: Colors.white),
+                  : const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
             ),
           ),
         ),

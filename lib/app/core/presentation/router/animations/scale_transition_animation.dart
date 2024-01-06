@@ -4,10 +4,10 @@ import '../page_router.dart';
 
 class ScaleTransitionAnimation extends RouteTransition {
   @override
-  Duration get transitionDuration => const Duration(milliseconds: 413);
+  Duration get transitionDuration => const Duration(milliseconds: 113);
 
   @override
-  Duration get reverseTransitionDuration => const Duration(milliseconds: 413);
+  Duration get reverseTransitionDuration => const Duration(milliseconds: 113);
 
   @override
   Widget transitionBuilder(
