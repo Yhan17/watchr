@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/presentation/routes/app_routes.dart';
 import '../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../../core/presentation/shared/theme/app_images.dart';
+import '../../../../core/presentation/shared/widgets/watch_delete_button_widget.dart';
 import '../components/delete_product_modality.dart';
 
 class ProductCardWidget extends HookWidget {
@@ -22,17 +24,25 @@ class ProductCardWidget extends HookWidget {
         children: [
           Stack(
             children: [
-              Container(
-                width: 200,
-                height: 200,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(24),
+              GestureDetector(
+                onTap: () {
+                  AppRoutes.details.push(
+                    context,
+                    arguments: noArgs,
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(24),
+                    ),
+                    color: AppColors.darkGreen,
                   ),
-                  color: AppColors.darkGreen,
-                ),
-                child: Image.asset(
-                  AppImages.onboardingWatch,
+                  child: Image.asset(
+                    AppImages.onboardingWatch,
+                  ),
                 ),
               ),
               Positioned(
@@ -42,23 +52,7 @@ class ProductCardWidget extends HookWidget {
                   onTap: () {
                     const DeleteProductModality().show(context);
                   },
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: const BoxDecoration(
-                      color: AppColors.greyLight,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.delete_forever_rounded,
-                        color: AppColors.brownLight,
-                        size: 16,
-                      ),
-                    ),
-                  ),
+                  child: const WatchDeleteButtonWidget(),
                 ),
               )
             ],
