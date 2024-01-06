@@ -4,8 +4,11 @@ class AppColors {
   /// ![](https://singlecolorimage.com/get/BFCFD9/400x40)
   static const Color greyLight = Color(0xFFBFCFD9);
 
+  /// ![](https://singlecolorimage.com/get/B3B3B3/400x40)
+  static const Color greyLighter = Color(0xFFB3B3B3);
+
   /// ![](https://singlecolorimage.com/get/010D06/400x40)
-  static const Color darkGreen = Color(0xFF010D06);
+  static const Color darkGreen = Color.fromRGBO(13, 38, 26, 1);
 
   /// ![](https://singlecolorimage.com/get/10261A/400x40)
   static const Color greenLight = Color(0xFF10261A);

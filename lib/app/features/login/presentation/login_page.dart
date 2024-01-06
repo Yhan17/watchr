@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/presentation/routes/app_routes.dart';
 import '../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../core/presentation/shared/theme/app_images.dart';
@@ -16,8 +16,6 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = useState<bool>(false);
-
     return Scaffold(
       backgroundColor: AppColors.greenLight,
       body: CustomScrollView(
@@ -31,9 +29,7 @@ class LoginPage extends HookConsumerWidget {
               ),
             ),
           ),
-          _LoginPageMainContent(
-            isLoading: isLoading,
-          ),
+          const _LoginPageMainContent(),
         ],
       ),
     );
@@ -41,11 +37,7 @@ class LoginPage extends HookConsumerWidget {
 }
 
 class _LoginPageMainContent extends StatelessWidget {
-  const _LoginPageMainContent({
-    required this.isLoading,
-  });
-
-  final ValueNotifier<bool> isLoading;
+  const _LoginPageMainContent();
 
   @override
   Widget build(BuildContext context) {
@@ -90,13 +82,12 @@ class _LoginPageMainContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 WatchButtonIconWidget(
-                  busy: isLoading.value,
                   icon: Icons.arrow_forward_ios_rounded,
                   onTap: () async {
-                    isLoading.value = true;
-                    await Future.delayed(const Duration(seconds: 4));
-                    debugPrint('teste');
-                    isLoading.value = false;
+                    AppRoutes.home.pushReplacement(
+                      context,
+                      arguments: noArgs,
+                    );
                   },
                 ),
               ],
