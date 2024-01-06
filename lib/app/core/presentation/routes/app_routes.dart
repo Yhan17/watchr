@@ -2,6 +2,7 @@ import '../../../features/details/presentation/watch_details_page.dart';
 import '../../../features/home/presentation/home_page.dart';
 import '../../../features/login/presentation/login_page.dart';
 import '../../../features/onboarding/presentation/onboarding_page.dart';
+import '../../../features/profile/presentation/profile_page.dart';
 import '../../../features/splash/presentation/splash_page.dart';
 import '../router/animations/slide_transition_animation.dart';
 import '../router/config.dart';
@@ -31,6 +32,10 @@ abstract class AppRoutes {
     path: '/details',
     pageBuilder: (_) => const WatchDetailsPage(),
   );
+  static final profile = AppPageRoute<NoArgs>(
+    path: '/profile',
+    pageBuilder: (_) => const ProfilePage(),
+  );
 
   static final routes = routeMapFrom([
     splash,
@@ -38,5 +43,6 @@ abstract class AppRoutes {
     login,
     home,
     details,
+    profile,
   ]);
 }
