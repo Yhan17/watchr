@@ -127,6 +127,9 @@ class _LoginPageMainContent extends HookConsumerWidget {
                 final state = cRef.watch(
                   signInEmailAndPasswordNotifierProvider,
                 );
+                final formState = cRef.watch(
+                  loginFormStateNotifierProvider,
+                );
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -136,12 +139,15 @@ class _LoginPageMainContent extends HookConsumerWidget {
                         loadInProgress: () => true,
                         orElse: () => false,
                       ),
-                      onTap: () async {
-                        signInEmailPasswordNotifier.signInEmailAndPassword(
-                          loginFormStateNotifier.last.email,
-                          loginFormStateNotifier.last.password,
-                        );
-                      },
+                      onTap: formState.loginCanSubmit
+                          ? () async {
+                              signInEmailPasswordNotifier
+                                  .signInEmailAndPassword(
+                                loginFormStateNotifier.last.email,
+                                loginFormStateNotifier.last.password,
+                              );
+                            }
+                          : null,
                     ),
                   ],
                 );
