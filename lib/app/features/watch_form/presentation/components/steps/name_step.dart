@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../core/domain/entities/watch_entity.dart';
 import '../../../../../core/presentation/router/config.dart';
 import '../../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../../core/presentation/shared/theme/app_colors.dart';
@@ -23,6 +25,21 @@ class NameStep extends HookConsumerWidget {
     final nameCanContinue = ref.watch(
       watchFormStateNotifierProvider.select((value) => value.nameCanContinue),
     );
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (watchFormStateNotifier.last.editEntity != null) {
+          final WatchEntity watchEntity =
+              watchFormStateNotifier.last.editEntity!;
+          watchFormStateNotifier.nameController.text = watchEntity.name;
+          watchFormStateNotifier.descController.text = watchEntity.description;
+          watchFormStateNotifier.nameChange(watchEntity.name);
+          watchFormStateNotifier.descChange(watchEntity.description);
+        }
+      });
+      return null;
+    }, const []);
+
     return DefaultFormScaffold(
       slivers: [
         SliverToBoxAdapter(
@@ -32,6 +49,7 @@ class NameStep extends HookConsumerWidget {
             ),
             child: WatchInputWidget(
               label: 'Name',
+              controller: watchFormStateNotifier.nameController,
               onChanged: watchFormStateNotifier.nameChange,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(20),
@@ -50,6 +68,7 @@ class NameStep extends HookConsumerWidget {
             child: WatchInputWidget(
               label: 'Desc',
               maxLines: 4,
+              controller: watchFormStateNotifier.descController,
               onChanged: watchFormStateNotifier.descChange,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(150),

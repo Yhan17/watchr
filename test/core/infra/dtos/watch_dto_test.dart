@@ -57,8 +57,8 @@ void main() {
       expect(watchMap['code'], equals('W123'));
       expect(watchMap['image_storage_path'], equals('path/to/image1.jpg'));
       expect(watchMap['user_id'], equals('user1'));
-      expect(watchMap['created_at'], equals(DateTime(2022).millisecondsSinceEpoch));
-      expect(watchMap['updated_at'], equals(DateTime(2022, 1, 2).millisecondsSinceEpoch));
+      expect(watchMap['created_at'], equals(DateTime(2022).toIso8601String()));
+      expect(watchMap['updated_at'], equals(DateTime(2022, 1, 2).toIso8601String()));
     });
 
     test('fromEntity should create a WatchDto from a WatchEntity', () {

@@ -22,6 +22,7 @@ mixin _$WatchFormState {
   String? get desc => throw _privateConstructorUsedError;
   String? get quantity => throw _privateConstructorUsedError;
   String? get price => throw _privateConstructorUsedError;
+  WatchEntity? get editEntity => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WatchFormStateCopyWith<WatchFormState> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $WatchFormStateCopyWith<$Res> {
       String? code,
       String? desc,
       String? quantity,
-      String? price});
+      String? price,
+      WatchEntity? editEntity});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$WatchFormStateCopyWithImpl<$Res, $Val extends WatchFormState>
     Object? desc = freezed,
     Object? quantity = freezed,
     Object? price = freezed,
+    Object? editEntity = freezed,
   }) {
     return _then(_value.copyWith(
       image: freezed == image
@@ -88,6 +91,10 @@ class _$WatchFormStateCopyWithImpl<$Res, $Val extends WatchFormState>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String?,
+      editEntity: freezed == editEntity
+          ? _value.editEntity
+          : editEntity // ignore: cast_nullable_to_non_nullable
+              as WatchEntity?,
     ) as $Val);
   }
 }
@@ -106,7 +113,8 @@ abstract class _$$WatchFormStateImplCopyWith<$Res>
       String? code,
       String? desc,
       String? quantity,
-      String? price});
+      String? price,
+      WatchEntity? editEntity});
 }
 
 /// @nodoc
@@ -126,6 +134,7 @@ class __$$WatchFormStateImplCopyWithImpl<$Res>
     Object? desc = freezed,
     Object? quantity = freezed,
     Object? price = freezed,
+    Object? editEntity = freezed,
   }) {
     return _then(_$WatchFormStateImpl(
       image: freezed == image
@@ -152,6 +161,10 @@ class __$$WatchFormStateImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as String?,
+      editEntity: freezed == editEntity
+          ? _value.editEntity
+          : editEntity // ignore: cast_nullable_to_non_nullable
+              as WatchEntity?,
     ));
   }
 }
@@ -165,7 +178,8 @@ class _$WatchFormStateImpl extends _WatchFormState {
       required this.code,
       required this.desc,
       required this.quantity,
-      required this.price})
+      required this.price,
+      required this.editEntity})
       : super._();
 
   @override
@@ -180,10 +194,12 @@ class _$WatchFormStateImpl extends _WatchFormState {
   final String? quantity;
   @override
   final String? price;
+  @override
+  final WatchEntity? editEntity;
 
   @override
   String toString() {
-    return 'WatchFormState(image: $image, name: $name, code: $code, desc: $desc, quantity: $quantity, price: $price)';
+    return 'WatchFormState(image: $image, name: $name, code: $code, desc: $desc, quantity: $quantity, price: $price, editEntity: $editEntity)';
   }
 
   @override
@@ -197,12 +213,14 @@ class _$WatchFormStateImpl extends _WatchFormState {
             (identical(other.desc, desc) || other.desc == desc) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.editEntity, editEntity) ||
+                other.editEntity == editEntity));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, image, name, code, desc, quantity, price);
+  int get hashCode => Object.hash(
+      runtimeType, image, name, code, desc, quantity, price, editEntity);
 
   @JsonKey(ignore: true)
   @override
@@ -219,7 +237,8 @@ abstract class _WatchFormState extends WatchFormState {
       required final String? code,
       required final String? desc,
       required final String? quantity,
-      required final String? price}) = _$WatchFormStateImpl;
+      required final String? price,
+      required final WatchEntity? editEntity}) = _$WatchFormStateImpl;
   _WatchFormState._() : super._();
 
   @override
@@ -234,6 +253,8 @@ abstract class _WatchFormState extends WatchFormState {
   String? get quantity;
   @override
   String? get price;
+  @override
+  WatchEntity? get editEntity;
   @override
   @JsonKey(ignore: true)
   _$$WatchFormStateImplCopyWith<_$WatchFormStateImpl> get copyWith =>

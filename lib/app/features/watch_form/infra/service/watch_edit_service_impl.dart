@@ -1,11 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dartz/dartz.dart';
 
 import '../../../../core/domain/entities/watch_entity.dart';
 import '../../../../core/domain/failures/failures.dart';
-import 'dart:io';
-
-import 'package:dartz/dartz.dart';
-
 import '../../../../core/infra/dtos/watch_dto.dart';
 import '../../../../core/infra/firebase/extensions/collections_extension.dart';
 import '../../../../core/infra/firebase/watch_storage.dart';
@@ -35,7 +34,10 @@ class WatchEditServiceImpl implements WatchEditService {
         );
       }
 
-      await _firebaseFirestore.watchesReference.doc(id).update(dto.toMap());
+      await _firebaseFirestore.watchesReference.doc(id).update({
+        ...dto.toMap(),
+        'updated_at': DateTime.now().toIso8601String(),
+      });
 
       return right(unit);
     } catch (_) {

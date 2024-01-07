@@ -12,6 +12,7 @@ import '../../../../../core/presentation/shared/utils/failure_snackbar_handler.d
 import '../../../../../core/presentation/shared/utils/number_range_input_formatter.dart';
 import '../../../../../core/presentation/shared/widgets/watch_button_text_widget.dart';
 import '../../../../../core/presentation/shared/widgets/watch_input_widget.dart';
+import '../../notifiers/edit_watch_state_notifier.dart';
 import '../../notifiers/submit_watch_state_notifier.dart';
 import '../../notifiers/watch_form_state_notifier.dart';
 import '../default_form_scaffold.dart';
@@ -32,6 +33,57 @@ class PriceStep extends HookConsumerWidget {
 
     final submitWatchNotifier = ref.watch(
       submitWatchStateNotifierProvider.notifier,
+    );
+    final editWatchNotifier = ref.watch(
+      editWatchStateNotifierProvider.notifier,
+    );
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (watchFormStateNotifier.last.editEntity != null) {
+          final WatchEntity watchEntity =
+              watchFormStateNotifier.last.editEntity!;
+          watchFormStateNotifier.codeController.text = watchEntity.code;
+          watchFormStateNotifier.priceController.text =
+              watchEntity.price.toString();
+          watchFormStateNotifier.quantityController.text =
+              watchEntity.stockQuantity.toString();
+          watchFormStateNotifier.codeChange(
+            watchEntity.code,
+          );
+          watchFormStateNotifier.quantityChange(
+            watchEntity.stockQuantity.toString(),
+          );
+          watchFormStateNotifier.priceChange(
+            watchEntity.price.toString(),
+          );
+          quantity.value = watchEntity.stockQuantity;
+          price.value = watchEntity.price;
+        }
+      });
+      return null;
+    }, const []);
+
+    ref.listen(
+      editWatchStateNotifierProvider,
+      (_, state) {
+        state.whenOrNull(
+          loadFailure: (failure) => FailureSnackbarHandler.handleFailure(
+            failure,
+            context,
+          ),
+          loadSuccess: (_) {
+            Navigator.of(context, rootNavigator: true)
+              ..pop()
+              ..pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Watch Edited'),
+              ),
+            );
+          },
+        );
+      },
     );
 
     ref.listen(
@@ -64,6 +116,7 @@ class PriceStep extends HookConsumerWidget {
             child: WatchInputWidget(
               label: 'Code',
               onChanged: watchFormStateNotifier.codeChange,
+              controller: watchFormStateNotifier.codeController,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(8),
               ],
@@ -80,6 +133,7 @@ class PriceStep extends HookConsumerWidget {
             child: WatchInputWidget(
               label: 'Quantity',
               inputType: TextInputType.number,
+              controller: watchFormStateNotifier.quantityController,
               inputFormatters: [
                 NumberRangeInputFormatter(),
               ],
@@ -97,6 +151,7 @@ class PriceStep extends HookConsumerWidget {
             ),
             child: WatchInputWidget(
               inputType: const TextInputType.numberWithOptions(decimal: true),
+              controller: watchFormStateNotifier.priceController,
               label: 'Price',
               inputFormatters: [
                 DoubleRangeInputFormatter(),
@@ -209,13 +264,40 @@ class PriceStep extends HookConsumerWidget {
             child: Consumer(
               builder: (_, cRef, __) {
                 final state = cRef.watch(submitWatchStateNotifierProvider);
+                final editState = cRef.watch(editWatchStateNotifierProvider);
                 return WatchButtonTextWidget(
                   busy: state.maybeWhen(
-                    loadInProgress: () => true,
-                    orElse: () => false,
-                  ),
+                        loadInProgress: () => true,
+                        orElse: () => false,
+                      ) ||
+                      editState.maybeWhen(
+                        loadInProgress: () => true,
+                        orElse: () => false,
+                      ),
                   onTap: canSubmit
                       ? () {
+                          if (watchFormStateNotifier.last.editEntity != null) {
+                            late WatchEntity watchEntity =
+                                watchFormStateNotifier.last.editEntity!;
+
+                            watchEntity = watchEntity.copyWith(
+                              name: watchFormStateNotifier.last.name!,
+                              description: watchFormStateNotifier.last.desc!,
+                              price: double.parse(
+                                watchFormStateNotifier.last.price!,
+                              ),
+                              stockQuantity: int.parse(
+                                watchFormStateNotifier.last.quantity!,
+                              ),
+                              code: watchFormStateNotifier.last.code!,
+                            );
+
+                            editWatchNotifier.editWatch(
+                              watchEntity,
+                              watchFormStateNotifier.last.image,
+                            );
+                            return;
+                          }
                           final entity = WatchEntity(
                             id: '',
                             name: watchFormStateNotifier.last.name!,

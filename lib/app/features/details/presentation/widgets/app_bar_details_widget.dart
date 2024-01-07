@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/domain/entities/watch_entity.dart';
 import '../../../../core/presentation/shared/widgets/app_bar_button_widget.dart';
 import '../../../../core/presentation/shared/widgets/watch_delete_button_widget.dart';
 
 class AppBarDetailsWidget extends StatelessWidget {
-  const AppBarDetailsWidget({super.key});
+  final WatchEntity watchEntity;
+  const AppBarDetailsWidget({
+    super.key,
+    required this.watchEntity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +30,10 @@ class AppBarDetailsWidget extends StatelessWidget {
                 icon: Icons.arrow_back_ios_rounded,
               ),
               const SizedBox.shrink(),
-              const WatchDeleteButtonWidget(size: 32),
+              WatchDeleteButtonWidget(
+                size: 32,
+                entity: watchEntity,
+              ),
             ],
           ),
         ),

@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../core/domain/entities/watch_entity.dart';
 import '../../../../core/presentation/routes/app_routes.dart';
 import '../../../../core/presentation/shared/common/app_spacing.dart';
+import '../../../../core/presentation/shared/components/delete_product_modality.dart';
 import '../../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../../core/presentation/shared/widgets/watch_delete_button_widget.dart';
-import '../components/delete_product_modality.dart';
 
 class ProductCardWidget extends HookWidget {
   final WatchEntity watchEntity;
@@ -32,7 +32,7 @@ class ProductCardWidget extends HookWidget {
                 onTap: () {
                   AppRoutes.details.push(
                     context,
-                    arguments: noArgs,
+                    arguments: watchEntity,
                   );
                 },
                 child: Container(
@@ -58,7 +58,9 @@ class ProductCardWidget extends HookWidget {
                       watchEntity: watchEntity,
                     ).show(context);
                   },
-                  child: const WatchDeleteButtonWidget(),
+                  child: WatchDeleteButtonWidget(
+                    entity: watchEntity,
+                  ),
                 ),
               )
             ],

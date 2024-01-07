@@ -32,7 +32,10 @@ class AppBarWidget extends StatelessWidget {
               ),
               AppBarButtonWidget(
                 onTap: () {
-                  AppRoutes.form.push(context, arguments: noArgs);
+                  AppRoutes.form.push(
+                    context,
+                    arguments: null,
+                  );
                 },
                 icon: Icons.add_rounded,
                 backgroundColor: AppColors.darkGreen,

@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../../../../core/domain/entities/watch_entity.dart';
+
 part 'watch_form_state.freezed.dart';
 
 @freezed
@@ -14,6 +16,7 @@ abstract class WatchFormState with _$WatchFormState {
     required String? desc,
     required String? quantity,
     required String? price,
+    required WatchEntity? editEntity,
   }) = _WatchFormState;
 
   factory WatchFormState.initial() => WatchFormState(
@@ -23,6 +26,7 @@ abstract class WatchFormState with _$WatchFormState {
         code: null,
         quantity: null,
         price: null,
+        editEntity: null
       );
 
   bool get imageCanContinue => image != null;

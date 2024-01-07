@@ -26,16 +26,44 @@ class WatchEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        name,
-        description,
-        price,
-        stockQuantity,
-        code,
-        imageStoragePath,
-        userId,
-        createdAt,
-        updatedAt,
-      ];
+  List<Object> get props {
+    return [
+      id,
+      name,
+      description,
+      price,
+      stockQuantity,
+      code,
+      imageStoragePath,
+      userId,
+      createdAt,
+      updatedAt,
+    ];
+  }
+
+  WatchEntity copyWith({
+    String? id,
+    String? name,
+    String? description,
+    double? price,
+    int? stockQuantity,
+    String? code,
+    String? imageStoragePath,
+    String? userId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return WatchEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      price: price ?? this.price,
+      stockQuantity: stockQuantity ?? this.stockQuantity,
+      code: code ?? this.code,
+      imageStoragePath: imageStoragePath ?? this.imageStoragePath,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
 }

@@ -30,6 +30,8 @@ class MockUuid extends Mock implements Uuid {}
 
 class MockFile extends Mock implements File {}
 
+class MockUser extends Mock implements User {}
+
 class MockCollectionReference extends Mock
     implements CollectionReference<Map<String, dynamic>> {}
 
@@ -59,15 +61,20 @@ void main() {
     test('WatchCreateService Provider', () async {
       final mockFirestore = MockFirestore();
       final mockWatchStorage = MockWatchStorage();
+      final mockFirebaseAuth = MockFirebaseAuth();
       final mockUuid = MockUuid();
       final mockFile = MockFile();
+      final mockUser = MockUser();
       final mockCollectionReference = MockCollectionReference();
       final mockDocumentReference = MockDocumentReference();
       final container = ProviderContainer(overrides: [
+        firebaseAuthProvider.overrideWithValue(mockFirebaseAuth),
         firestoreProvider.overrideWithValue(mockFirestore),
         watchStorageProvider.overrideWithValue(mockWatchStorage),
         uuidProvider.overrideWithValue(mockUuid),
       ]);
+      when(() => mockFirebaseAuth.currentUser).thenReturn(mockUser);
+      when(() => mockUser.uid).thenReturn('');
 
       when(() => mockUuid.v4()).thenReturn('mocked_uuid');
       when(
