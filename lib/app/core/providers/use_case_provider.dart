@@ -3,6 +3,7 @@ import 'package:riverpod/riverpod.dart';
 import '../../features/home/domain/usecase/watches_list_use_case.dart';
 import '../../features/watch_form/domain/usecase/watch_create_use_case.dart';
 import '../../features/watch_form/domain/usecase/watch_edit_use_case.dart';
+import '../domain/usecases/recovery_password_use_case.dart';
 import '../domain/usecases/sign_in_email_and_password_use_case.dart';
 import '../domain/usecases/sign_out_use_case.dart';
 import '../domain/usecases/sign_up_email_and_password_use_case.dart';
@@ -46,6 +47,12 @@ final verifyIfLoggedUseCaseProvider = Provider.autoDispose(
 );
 final signOutUseCaseProvider = Provider.autoDispose(
   (ref) => SignOutUseCase(
+    ref.read(authServiceProvider),
+  ),
+);
+
+final recoveryPasswordUseCaseProvider = Provider.autoDispose(
+  (ref) => RecoveryPasswordUseCase(
     ref.read(authServiceProvider),
   ),
 );
