@@ -20,69 +20,32 @@ class ImageStep extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final file = useState<File?>(null);
+    final editImagePath = useState<String?>(null);
     final watchFormStateNotifier = ref.watch(
       watchFormStateNotifierProvider.notifier,
     );
     final imageCanContinue = ref.watch(
       watchFormStateNotifierProvider.select((value) => value.imageCanContinue),
     );
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (watchFormStateNotifier.last.editEntity != null) {
+          editImagePath.value =
+              watchFormStateNotifier.last.editEntity!.imageStoragePath;
+        }
+      });
+      return null;
+    }, const []);
+
     return DefaultFormScaffold(
       slivers: [
         SliverToBoxAdapter(
-          child: file.value != null
-              ? Stack(
-                  children: [
-                    Center(
-                      child: Image.file(
-                        file.value!,
-                        height: 300,
-                      ),
-                    ),
-                    Positioned(
-                      right: 24,
-                      top: 24,
-                      child: GestureDetector(
-                        onTap: () {
-                          file.value = null;
-                        },
-                        child: const Icon(
-                          Icons.delete,
-                          color: AppColors.darkOrange,
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              : GestureDetector(
-                  onTap: () async {
-                    final image = await ImagePicker().pickImage(
-                      source: ImageSource.gallery,
-                    );
-                    if (image != null) {
-                      file.value = File(image.path);
-                      watchFormStateNotifier.imageChange(file.value!);
-                    }
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(122),
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                    ).copyWith(top: 64),
-                    decoration: const BoxDecoration(
-                      color: AppColors.greyLight,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Icon(
-                        Icons.photo_rounded,
-                        color: AppColors.brownLight,
-                        size: 64,
-                      ),
-                    ),
-                  ),
-                ),
+          child: _renderImage(
+            file,
+            watchFormStateNotifier,
+            editImagePath,
+          ),
         ),
         SliverToBoxAdapter(
           child: AppSpacing.vertical(52),
@@ -119,7 +82,7 @@ class ImageStep extends HookConsumerWidget {
               bottom: 32,
             ),
             child: WatchButtonTextOutlinedWidget(
-              onTap: imageCanContinue
+              onTap: imageCanContinue || editImagePath.value != null
                   ? () {
                       WatchFormRoutes.nameStep.push(
                         context,
@@ -131,6 +94,97 @@ class ImageStep extends HookConsumerWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _renderImage(
+    ValueNotifier<File?> file,
+    WatchFormStateNotifier watchFormStateNotifier,
+    ValueNotifier<String?> editImagePath,
+  ) {
+    if (editImagePath.value != null) {
+      return Stack(
+        children: [
+          Center(
+            child: Image.network(
+              editImagePath.value!,
+              height: 300,
+            ),
+          ),
+          Positioned(
+            right: 24,
+            top: 24,
+            child: GestureDetector(
+              onTap: () {
+                editImagePath.value = null;
+                file.value = null;
+              },
+              child: const Icon(
+                Icons.delete,
+                color: AppColors.darkOrange,
+              ),
+            ),
+          )
+        ],
+      );
+    }
+
+    if (file.value != null) {
+      return Stack(
+        children: [
+          Center(
+            child: Image.file(
+              file.value!,
+              height: 300,
+            ),
+          ),
+          Positioned(
+            right: 24,
+            top: 24,
+            child: GestureDetector(
+              onTap: () {
+                editImagePath.value = null;
+                file.value = null;
+              },
+              child: const Icon(
+                Icons.delete,
+                color: AppColors.darkOrange,
+              ),
+            ),
+          )
+        ],
+      );
+    }
+
+    return GestureDetector(
+      onTap: () async {
+        final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+        );
+        if (image != null) {
+          file.value = File(image.path);
+          watchFormStateNotifier.imageChange(file.value!);
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(122),
+        margin: const EdgeInsets.symmetric(
+          horizontal: 24,
+        ).copyWith(top: 64),
+        decoration: const BoxDecoration(
+          color: AppColors.greyLight,
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+        child: const Center(
+          child: Icon(
+            Icons.photo_rounded,
+            color: AppColors.brownLight,
+            size: 64,
+          ),
+        ),
       ),
     );
   }

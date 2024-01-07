@@ -11,9 +11,12 @@ class WatchStorage {
     required File image,
   }) async {
     final reference = _firebaseStorage.ref().child('watches');
-    final uploadTask = reference
-        .child(uuid)
-        .putFile(image, SettableMetadata(contentType: 'image/png'));
+    final uploadTask = reference.child(uuid).putFile(
+          image,
+          SettableMetadata(
+            contentType: 'image/png',
+          ),
+        );
 
     final result = await uploadTask;
     final path = await result.ref.getDownloadURL();
@@ -22,6 +25,6 @@ class WatchStorage {
   }
 
   Future<void> deleteImage(String id) async {
-    await _firebaseStorage.ref().child('watches/$id.png').delete();
+    await _firebaseStorage.ref().child('watches/$id').delete();
   }
 }

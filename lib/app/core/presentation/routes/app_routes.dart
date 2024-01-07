@@ -5,6 +5,7 @@ import '../../../features/onboarding/presentation/onboarding_page.dart';
 import '../../../features/profile/presentation/profile_page.dart';
 import '../../../features/splash/presentation/splash_page.dart';
 import '../../../features/watch_form/presentation/form_page.dart';
+import '../../domain/entities/watch_entity.dart';
 import '../router/animations/slide_transition_animation.dart';
 import '../router/config.dart';
 import '../router/page_router.dart';
@@ -12,7 +13,6 @@ import '../router/page_router.dart';
 export '../router/config.dart' show PageRouteNavigation, noArgs;
 
 abstract class AppRoutes {
-  
   static final splash = AppPageRoute<NoArgs>(
     path: '/',
     pageBuilder: (_) => const SplashPage(),
@@ -34,9 +34,11 @@ abstract class AppRoutes {
     pageBuilder: (_) => const HomePage(),
   );
 
-  static final details = AppPageRoute<NoArgs>(
+  static final details = AppPageRoute<WatchEntity>(
     path: '/details',
-    pageBuilder: (_) => const WatchDetailsPage(),
+    pageBuilder: (entity) => WatchDetailsPage(
+      watchEntity: entity as WatchEntity,
+    ),
   );
 
   static final profile = AppPageRoute<NoArgs>(
@@ -44,9 +46,9 @@ abstract class AppRoutes {
     pageBuilder: (_) => const ProfilePage(),
   );
 
-  static final form = AppPageRoute<NoArgs>(
+  static final form = AppPageRoute<WatchEntity?>(
     path: '/form',
-    pageBuilder: (_) => const FormPage(),
+    pageBuilder: (entity) => FormPage(watchEntity: entity),
   );
 
   static final routes = routeMapFrom([

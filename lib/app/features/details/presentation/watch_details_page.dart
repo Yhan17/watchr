@@ -2,22 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../core/domain/entities/watch_entity.dart';
+import '../../../core/presentation/routes/app_routes.dart';
 import '../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../core/presentation/shared/theme/app_colors.dart';
-import '../../../core/presentation/shared/theme/app_images.dart';
 import '../../../core/presentation/shared/widgets/watch_button_text_widget.dart';
 import 'widgets/app_bar_details_widget.dart';
 
 class WatchDetailsPage extends HookConsumerWidget {
-  const WatchDetailsPage({Key? key}) : super(key: key);
+  final WatchEntity watchEntity;
+  const WatchDetailsPage({
+    Key? key,
+    required this.watchEntity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Stack(
         children: [
-          const _DetailsGreenSideContent(),
-          const AppBarDetailsWidget(),
+          _DetailsGreenSideContent(watchEntity),
+          AppBarDetailsWidget(
+            watchEntity: watchEntity,
+          ),
           Row(
             children: [
               const Expanded(
@@ -27,8 +34,8 @@ class WatchDetailsPage extends HookConsumerWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    AppImages.onboardingWatch,
+                  Image.network(
+                    watchEntity.imageStoragePath,
                     width: 200,
                   ),
                 ],
@@ -45,7 +52,8 @@ class WatchDetailsPage extends HookConsumerWidget {
 }
 
 class _DetailsGreenSideContent extends StatelessWidget {
-  const _DetailsGreenSideContent();
+  final WatchEntity entity;
+  const _DetailsGreenSideContent(this.entity);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +75,7 @@ class _DetailsGreenSideContent extends StatelessWidget {
                       horizontal: 24,
                     ),
                     child: Text(
-                      'Rolex Top 2019',
+                      entity.name,
                       style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -92,10 +100,7 @@ class _DetailsGreenSideContent extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod'
-                                ' tempor incididunt ut labore et dolore magna aliqua.'
-                                ' Sed viverra ipsum nunc aliquet bibendum enim facilisis gravida.'
-                                ' Tristique senectus et netus et.',
+                                entity.description,
                                 style: GoogleFonts.poppins(
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold,
@@ -139,7 +144,7 @@ class _DetailsGreenSideContent extends StatelessWidget {
                               ),
                               AppSpacing.horizontal(12),
                               Text(
-                                '22',
+                                entity.stockQuantity.toString(),
                                 style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
@@ -160,7 +165,7 @@ class _DetailsGreenSideContent extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Text(
-                      r'$ 55.96',
+                      '\$ ${entity.price}',
                       style: GoogleFonts.poppins(
                         fontSize: 28,
                         color: Colors.white,
@@ -177,7 +182,12 @@ class _DetailsGreenSideContent extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: WatchButtonTextWidget(
                       text: 'Edit',
-                      onTap: () {},
+                      onTap: () {
+                        AppRoutes.form.push(
+                          context,
+                          arguments: entity,
+                        );
+                      },
                     ),
                   ),
                 ),

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../../../core/domain/entities/watch_entity.dart';
-import '../../../../core/presentation/shared/common/app_spacing.dart';
-import '../../../../core/presentation/shared/components/watch_modality.dart';
-import '../../../../core/presentation/shared/theme/app_colors.dart';
-import '../../../../core/presentation/shared/widgets/watch_button_text_outlined_widget.dart';
-import '../../../../core/presentation/shared/widgets/watch_button_text_widget.dart';
-import '../notifiers/delete_watch_state_notifier.dart';
+import '../../../../features/home/presentation/notifiers/delete_watch_state_notifier.dart';
+import '../../../domain/entities/watch_entity.dart';
+import '../common/app_spacing.dart';
+import '../theme/app_colors.dart';
+import '../widgets/watch_button_text_outlined_widget.dart';
+import '../widgets/watch_button_text_widget.dart';
+import 'watch_modality.dart';
 
 class DeleteProductModality extends WatchModality {
   final WatchEntity watchEntity;
