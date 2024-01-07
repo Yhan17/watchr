@@ -6,9 +6,12 @@ import '../../../core/presentation/routes/app_routes.dart';
 import '../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../core/presentation/shared/theme/app_images.dart';
+import '../../../core/presentation/shared/utils/failure_snackbar_handler.dart';
 import '../../../core/presentation/shared/widgets/watch_button_icon_widget.dart';
 import 'components/create_account_modality.dart';
 import 'components/forgot_password_modality.dart';
+import 'notifiers/login_form_state_notifier.dart';
+import 'notifiers/sign_in_email_password_notifier.dart';
 import 'widgets/login_input_widget.dart';
 
 class LoginPage extends HookConsumerWidget {
@@ -16,6 +19,28 @@ class LoginPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final _ = ref.watch(
+      loginFormStateNotifierProvider.notifier,
+    );
+
+    ref.listen(
+      signInEmailAndPasswordNotifierProvider,
+      (_, state) {
+        state.whenOrNull(
+          loadFailure: (failure) => FailureSnackbarHandler.handleFailure(
+            failure,
+            context,
+          ),
+          loadSuccess: (_) {
+            AppRoutes.home.pushReplacement(
+              context,
+              arguments: noArgs,
+            );
+          },
+        );
+      },
+    );
+
     return Scaffold(
       backgroundColor: AppColors.greenLight,
       body: CustomScrollView(
@@ -36,11 +61,18 @@ class LoginPage extends HookConsumerWidget {
   }
 }
 
-class _LoginPageMainContent extends StatelessWidget {
+class _LoginPageMainContent extends HookConsumerWidget {
   const _LoginPageMainContent();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginFormStateNotifier = ref.watch(
+      loginFormStateNotifierProvider.notifier,
+    );
+    final signInEmailPasswordNotifier = ref.watch(
+      signInEmailAndPasswordNotifierProvider.notifier,
+    );
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -49,15 +81,27 @@ class _LoginPageMainContent extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const WatchLoginInputWidget(
+            WatchLoginInputWidget(
               label: 'E-mail',
+              controller: loginFormStateNotifier.emailController,
+              validator: (value) {
+                loginFormStateNotifier.changeEmailAddress(value);
+                if (!loginFormStateNotifier.emailIsValid) {
+                  return 'Please insert a valid email';
+                }
+                return null;
+              },
             ),
             AppSpacing.vertical(32),
             WatchLoginInputWidget(
               label: 'Password',
+              controller: loginFormStateNotifier.passwordController,
+              obscureText: true,
               validator: (value) {
-                if (value.length >= 2) {
-                  return 'teste';
+                loginFormStateNotifier.changePassword(value);
+                if (!loginFormStateNotifier.passwordIsValid &&
+                    value.isNotEmpty) {
+                  return 'Please insert minimum 6 characters';
                 }
                 return null;
               },
@@ -78,19 +122,30 @@ class _LoginPageMainContent extends StatelessWidget {
               ),
             ),
             AppSpacing.vertical(48),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                WatchButtonIconWidget(
-                  icon: Icons.arrow_forward_ios_rounded,
-                  onTap: () async {
-                    AppRoutes.home.pushReplacement(
-                      context,
-                      arguments: noArgs,
-                    );
-                  },
-                ),
-              ],
+            Consumer(
+              builder: (_, cRef, __) {
+                final state = cRef.watch(
+                  signInEmailAndPasswordNotifierProvider,
+                );
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    WatchButtonIconWidget(
+                      icon: Icons.arrow_forward_ios_rounded,
+                      busy: state.maybeWhen(
+                        loadInProgress: () => true,
+                        orElse: () => false,
+                      ),
+                      onTap: () async {
+                        signInEmailPasswordNotifier.signInEmailAndPassword(
+                          loginFormStateNotifier.last.email,
+                          loginFormStateNotifier.last.password,
+                        );
+                      },
+                    ),
+                  ],
+                );
+              },
             ),
             AppSpacing.vertical(48),
             Row(

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../entities/user_entity.dart';
 import '../failures/failures.dart';
@@ -16,4 +17,8 @@ abstract class AuthService {
     EmailAddressValue email,
     PasswordValue password,
   );
+
+  Future<Option<User>> getCurrentUser();
+
+  Future<Option<Unit>> signOut();
 }

@@ -33,6 +33,7 @@ dev_dependencies:
   freezed: ^2.4.6  # Gerador de código para imutabilidade em Dart
   mocktail: ^1.0.2  # Ferramenta para criar mocks de forma concisa
   flutter_launcher_icons: ^0.13.1  # Ferramenta para definir ícones de aplicativos Flutter
+  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true  # Indica o uso do Material Design no aplicativo

@@ -90,7 +90,7 @@ class WatchInputWidget extends HookWidget {
     }
 
     return Text(
-      'o campo deve ter no mínimo 6 caracteres',
+      validationError.value!,
       style: GoogleFonts.poppins(
         color: AppColors.darkOrange,
       ),
