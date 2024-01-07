@@ -4,11 +4,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../core/presentation/shared/common/app_spacing.dart';
+import '../../domain/usecase/watches_list_use_case.dart';
 import '../notifiers/watch_list_state_notifier.dart';
 import '../widgets/product_card_widget.dart';
 
 class ProductCardComponent extends HookConsumerWidget {
-  const ProductCardComponent({Key? key}) : super(key: key);
+  final FilterParams filterParams;
+  const ProductCardComponent({
+    Key? key,
+    required this.filterParams,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

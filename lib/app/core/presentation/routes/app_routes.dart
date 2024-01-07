@@ -9,6 +9,7 @@ import '../../domain/entities/watch_entity.dart';
 import '../router/animations/slide_transition_animation.dart';
 import '../router/config.dart';
 import '../router/page_router.dart';
+import 'params/form_params.dart';
 
 export '../router/config.dart' show PageRouteNavigation, noArgs;
 
@@ -46,9 +47,11 @@ abstract class AppRoutes {
     pageBuilder: (_) => const ProfilePage(),
   );
 
-  static final form = AppPageRoute<WatchEntity?>(
+  static final form = AppPageRoute<FormParams>(
     path: '/form',
-    pageBuilder: (entity) => FormPage(watchEntity: entity),
+    pageBuilder: (entity) => FormPage(
+      watchEntity: (entity as FormParams).watchEntity,
+    ),
   );
 
   static final routes = routeMapFrom([

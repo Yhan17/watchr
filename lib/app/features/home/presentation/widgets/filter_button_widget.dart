@@ -7,11 +7,13 @@ class FilterButtonWidget extends HookWidget {
   final IconData icon;
   final Color backgroundColor;
   final Color iconColor;
+  final bool isSelected;
   const FilterButtonWidget({
     Key? key,
     required this.icon,
     this.backgroundColor = Colors.white,
     this.iconColor = AppColors.golden,
+    required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -32,6 +34,16 @@ class FilterButtonWidget extends HookWidget {
         border: Border.all(
           color: AppColors.greyLighter.withOpacity(.5),
         ),
+        boxShadow: isSelected
+            ? [
+                BoxShadow(
+                  color: AppColors.darkGreen.withOpacity(.25),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: const Offset(0, 7),
+                ),
+              ]
+            : null,
       ),
       child: Icon(
         icon,

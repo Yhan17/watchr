@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../routes/app_routes.dart';
+import '../../routes/params/form_params.dart';
 import '../theme/app_colors.dart';
 import 'app_bar_button_widget.dart';
 
@@ -34,7 +35,7 @@ class AppBarWidget extends StatelessWidget {
                 onTap: () {
                   AppRoutes.form.push(
                     context,
-                    arguments: null,
+                    arguments: FormParams(null),
                   );
                 },
                 icon: Icons.add_rounded,

@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:watchr/app/core/domain/entities/watch_entity.dart';
 import 'package:watchr/app/core/domain/failures/failures.dart';
-import 'package:watchr/app/core/usecase/use_case.dart';
 import 'package:watchr/app/features/home/domain/services/watches_service.dart';
 import 'package:watchr/app/features/home/domain/usecase/watches_list_use_case.dart';
 
@@ -55,7 +54,7 @@ void main() {
       final controller =
           StreamController<Either<Failures, List<WatchEntity>>>();
 
-      watchesListUseCase.call(const NoParams()).listen(controller.add);
+      watchesListUseCase.call(FilterParams()).listen(controller.add);
 
       final actualResult = await controller.stream.first;
 
@@ -72,7 +71,7 @@ void main() {
       final controller =
           StreamController<Either<Failures, List<WatchEntity>>>();
 
-      watchesListUseCase.call(const NoParams()).listen(controller.add);
+      watchesListUseCase.call(FilterParams()).listen(controller.add);
 
       final actualResult = await controller.stream.first;
 
