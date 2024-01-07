@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../../core/domain/entities/watch_entity.dart';
 import '../../../../core/presentation/routes/app_routes.dart';
 import '../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../core/presentation/shared/theme/app_colors.dart';
-import '../../../../core/presentation/shared/theme/app_images.dart';
 import '../../../../core/presentation/shared/widgets/watch_delete_button_widget.dart';
 import '../components/delete_product_modality.dart';
 
 class ProductCardWidget extends HookWidget {
-  const ProductCardWidget({Key? key}) : super(key: key);
+  final WatchEntity watchEntity;
+  const ProductCardWidget({
+    Key? key,
+    required this.watchEntity,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +44,8 @@ class ProductCardWidget extends HookWidget {
                     ),
                     color: AppColors.darkGreen,
                   ),
-                  child: Image.asset(
-                    AppImages.onboardingWatch,
+                  child: Image.network(
+                    watchEntity.imageStoragePath,
                   ),
                 ),
               ),
@@ -50,7 +54,9 @@ class ProductCardWidget extends HookWidget {
                 top: 16,
                 child: GestureDetector(
                   onTap: () {
-                    const DeleteProductModality().show(context);
+                    DeleteProductModality(
+                      watchEntity: watchEntity,
+                    ).show(context);
                   },
                   child: const WatchDeleteButtonWidget(),
                 ),
@@ -63,7 +69,7 @@ class ProductCardWidget extends HookWidget {
             children: [
               Flexible(
                 child: Text(
-                  'Rolex Top 2019',
+                  watchEntity.name,
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     color: AppColors.darkGreen,
@@ -79,9 +85,11 @@ class ProductCardWidget extends HookWidget {
                   ),
                   AppSpacing.horizontal(4),
                   Text(
-                    '22',
+                    '${watchEntity.stockQuantity}',
                     style: GoogleFonts.poppins(
-                        fontSize: 16, color: AppColors.darkGreen),
+                      fontSize: 16,
+                      color: AppColors.darkGreen,
+                    ),
                   )
                 ],
               ),
@@ -89,7 +97,7 @@ class ProductCardWidget extends HookWidget {
           ),
           AppSpacing.vertical(2),
           Text(
-            r'$55.96',
+            '\$ ${watchEntity.price}',
             style: GoogleFonts.poppins(
               fontSize: 16,
               color: AppColors.darkGreen,
