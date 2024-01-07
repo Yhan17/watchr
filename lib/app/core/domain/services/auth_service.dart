@@ -17,6 +17,9 @@ abstract class AuthService {
     EmailAddressValue email,
     PasswordValue password,
   );
+  Future<Either<Failures, Unit>> recoveryPassword(
+    EmailAddressValue email,
+  );
 
   Future<Option<User>> getCurrentUser();
 

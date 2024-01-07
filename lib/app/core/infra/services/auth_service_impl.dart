@@ -106,4 +106,19 @@ class AuthServiceImpl implements AuthService {
       return none();
     }
   }
+
+  @override
+  Future<Either<Failures, Unit>> recoveryPassword(
+      EmailAddressValue email) async {
+    try {
+      final emailString = email.value.getOrElse(
+        () => throw Failures.serviceFailure,
+      );
+      await _firebaseAuth.sendPasswordResetEmail(email: emailString);
+
+      return right(unit);
+    } catch (_) {
+      return left(Failures.serviceFailure);
+    }
+  }
 }
