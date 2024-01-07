@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/presentation/router/config.dart';
+import 'notifiers/watch_form_state_notifier.dart';
 import 'routes/watch_form_routes.dart';
 
 class FormPage extends HookConsumerWidget {
@@ -13,6 +14,7 @@ class FormPage extends HookConsumerWidget {
     final navigatorKey = useMemoized<GlobalKey>(
       () => GlobalKey<NavigatorState>(),
     );
+    final _ = ref.watch(watchFormStateNotifierProvider.notifier);
 
     return Navigator(
       key: navigatorKey,

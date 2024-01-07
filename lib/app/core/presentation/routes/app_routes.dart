@@ -1,5 +1,5 @@
 import '../../../features/details/presentation/watch_details_page.dart';
-import '../../../features/form/presentation/from_page.dart';
+import '../../../features/form/presentation/form_page.dart';
 import '../../../features/home/presentation/home_page.dart';
 import '../../../features/login/presentation/login_page.dart';
 import '../../../features/onboarding/presentation/onboarding_page.dart';

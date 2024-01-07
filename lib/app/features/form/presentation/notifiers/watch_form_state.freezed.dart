@@ -1,0 +1,241 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'watch_form_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
+/// @nodoc
+mixin _$WatchFormState {
+  File? get image => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get desc => throw _privateConstructorUsedError;
+  String? get quantity => throw _privateConstructorUsedError;
+  String? get price => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $WatchFormStateCopyWith<WatchFormState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $WatchFormStateCopyWith<$Res> {
+  factory $WatchFormStateCopyWith(
+          WatchFormState value, $Res Function(WatchFormState) then) =
+      _$WatchFormStateCopyWithImpl<$Res, WatchFormState>;
+  @useResult
+  $Res call(
+      {File? image,
+      String? name,
+      String? code,
+      String? desc,
+      String? quantity,
+      String? price});
+}
+
+/// @nodoc
+class _$WatchFormStateCopyWithImpl<$Res, $Val extends WatchFormState>
+    implements $WatchFormStateCopyWith<$Res> {
+  _$WatchFormStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? code = freezed,
+    Object? desc = freezed,
+    Object? quantity = freezed,
+    Object? price = freezed,
+  }) {
+    return _then(_value.copyWith(
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as File?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$WatchFormStateImplCopyWith<$Res>
+    implements $WatchFormStateCopyWith<$Res> {
+  factory _$$WatchFormStateImplCopyWith(_$WatchFormStateImpl value,
+          $Res Function(_$WatchFormStateImpl) then) =
+      __$$WatchFormStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {File? image,
+      String? name,
+      String? code,
+      String? desc,
+      String? quantity,
+      String? price});
+}
+
+/// @nodoc
+class __$$WatchFormStateImplCopyWithImpl<$Res>
+    extends _$WatchFormStateCopyWithImpl<$Res, _$WatchFormStateImpl>
+    implements _$$WatchFormStateImplCopyWith<$Res> {
+  __$$WatchFormStateImplCopyWithImpl(
+      _$WatchFormStateImpl _value, $Res Function(_$WatchFormStateImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? image = freezed,
+    Object? name = freezed,
+    Object? code = freezed,
+    Object? desc = freezed,
+    Object? quantity = freezed,
+    Object? price = freezed,
+  }) {
+    return _then(_$WatchFormStateImpl(
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as File?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desc: freezed == desc
+          ? _value.desc
+          : desc // ignore: cast_nullable_to_non_nullable
+              as String?,
+      quantity: freezed == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$WatchFormStateImpl extends _WatchFormState {
+  _$WatchFormStateImpl(
+      {required this.image,
+      required this.name,
+      required this.code,
+      required this.desc,
+      required this.quantity,
+      required this.price})
+      : super._();
+
+  @override
+  final File? image;
+  @override
+  final String? name;
+  @override
+  final String? code;
+  @override
+  final String? desc;
+  @override
+  final String? quantity;
+  @override
+  final String? price;
+
+  @override
+  String toString() {
+    return 'WatchFormState(image: $image, name: $name, code: $code, desc: $desc, quantity: $quantity, price: $price)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WatchFormStateImpl &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.desc, desc) || other.desc == desc) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity) &&
+            (identical(other.price, price) || other.price == price));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, image, name, code, desc, quantity, price);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WatchFormStateImplCopyWith<_$WatchFormStateImpl> get copyWith =>
+      __$$WatchFormStateImplCopyWithImpl<_$WatchFormStateImpl>(
+          this, _$identity);
+}
+
+abstract class _WatchFormState extends WatchFormState {
+  factory _WatchFormState(
+      {required final File? image,
+      required final String? name,
+      required final String? code,
+      required final String? desc,
+      required final String? quantity,
+      required final String? price}) = _$WatchFormStateImpl;
+  _WatchFormState._() : super._();
+
+  @override
+  File? get image;
+  @override
+  String? get name;
+  @override
+  String? get code;
+  @override
+  String? get desc;
+  @override
+  String? get quantity;
+  @override
+  String? get price;
+  @override
+  @JsonKey(ignore: true)
+  _$$WatchFormStateImplCopyWith<_$WatchFormStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,6 +8,7 @@ import '../../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../../../core/presentation/shared/widgets/watch_button_text_outlined_widget.dart';
 import '../../../../../core/presentation/shared/widgets/watch_input_widget.dart';
+import '../../notifiers/watch_form_state_notifier.dart';
 import '../../routes/watch_form_routes.dart';
 import '../default_form_scaffold.dart';
 
@@ -15,6 +17,12 @@ class NameStep extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final watchFormStateNotifier = ref.watch(
+      watchFormStateNotifierProvider.notifier,
+    );
+    final nameCanContinue = ref.watch(
+      watchFormStateNotifierProvider.select((value) => value.nameCanContinue),
+    );
     return DefaultFormScaffold(
       slivers: [
         SliverToBoxAdapter(
@@ -22,7 +30,13 @@ class NameStep extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(
               top: 64,
             ),
-            child: const WatchInputWidget(label: 'Name'),
+            child: WatchInputWidget(
+              label: 'Name',
+              onChanged: watchFormStateNotifier.nameChange,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(20),
+              ],
+            ),
           ),
         ),
         SliverToBoxAdapter(
@@ -33,9 +47,13 @@ class NameStep extends HookConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(
               top: 64,
             ),
-            child: const WatchInputWidget(
+            child: WatchInputWidget(
               label: 'Desc',
               maxLines: 4,
+              onChanged: watchFormStateNotifier.descChange,
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(150),
+              ],
             ),
           ),
         ),
@@ -93,12 +111,14 @@ class NameStep extends HookConsumerWidget {
               bottom: 32,
             ),
             child: WatchButtonTextOutlinedWidget(
-              onTap: () {
-                WatchFormRoutes.priceStep.push(
-                  context,
-                  arguments: noArgs,
-                );
-              },
+              onTap: nameCanContinue
+                  ? () {
+                      WatchFormRoutes.priceStep.push(
+                        context,
+                        arguments: noArgs,
+                      );
+                    }
+                  : null,
               text: 'Next',
             ),
           ),

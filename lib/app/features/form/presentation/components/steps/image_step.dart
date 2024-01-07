@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../core/presentation/routes/app_routes.dart';
 import '../../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../../../core/presentation/shared/widgets/watch_button_text_outlined_widget.dart';
+import '../../notifiers/watch_form_state_notifier.dart';
 import '../../routes/watch_form_routes.dart';
 import '../default_form_scaffold.dart';
 
@@ -14,28 +19,70 @@ class ImageStep extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final file = useState<File?>(null);
+    final watchFormStateNotifier = ref.watch(
+      watchFormStateNotifierProvider.notifier,
+    );
+    final imageCanContinue = ref.watch(
+      watchFormStateNotifierProvider.select((value) => value.imageCanContinue),
+    );
     return DefaultFormScaffold(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(
-            padding: const EdgeInsets.all(122),
-            margin: const EdgeInsets.symmetric(
-              horizontal: 24,
-            ).copyWith(top: 64),
-            decoration: const BoxDecoration(
-              color: AppColors.greyLight,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
-            child: const Center(
-              child: Icon(
-                Icons.photo_rounded,
-                color: AppColors.brownLight,
-                size: 64,
-              ),
-            ),
-          ),
+          child: file.value != null
+              ? Stack(
+                  children: [
+                    Center(
+                      child: Image.file(
+                        file.value!,
+                        height: 300,
+                      ),
+                    ),
+                    Positioned(
+                      right: 24,
+                      top: 24,
+                      child: GestureDetector(
+                        onTap: () {
+                          file.value = null;
+                        },
+                        child: const Icon(
+                          Icons.delete,
+                          color: AppColors.darkOrange,
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              : GestureDetector(
+                  onTap: () async {
+                    final image = await ImagePicker().pickImage(
+                      source: ImageSource.gallery,
+                    );
+                    if (image != null) {
+                      file.value = File(image.path);
+                      watchFormStateNotifier.imageChange(file.value!);
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(122),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                    ).copyWith(top: 64),
+                    decoration: const BoxDecoration(
+                      color: AppColors.greyLight,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.photo_rounded,
+                        color: AppColors.brownLight,
+                        size: 64,
+                      ),
+                    ),
+                  ),
+                ),
         ),
         SliverToBoxAdapter(
           child: AppSpacing.vertical(52),
@@ -72,12 +119,14 @@ class ImageStep extends HookConsumerWidget {
               bottom: 32,
             ),
             child: WatchButtonTextOutlinedWidget(
-              onTap: () {
-                WatchFormRoutes.nameStep.push(
-                  context,
-                  arguments: noArgs,
-                );
-              },
+              onTap: imageCanContinue
+                  ? () {
+                      WatchFormRoutes.nameStep.push(
+                        context,
+                        arguments: noArgs,
+                      );
+                    }
+                  : null,
               text: 'Next',
             ),
           ),

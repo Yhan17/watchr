@@ -25,6 +25,7 @@ dependencies:
   equatable: ^2.0.5  # Facilita a implementação de métodos `equals` e `hashCode`
   rxdart: ^0.27.7  # Programação reativa para Dart
   jwt_decoder: ^2.0.1 #Decoder JWT
+  image_picker: ^1.0.6 #Picker Images
 
 dev_dependencies:
   flutter_test:
