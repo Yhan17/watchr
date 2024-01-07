@@ -17,7 +17,7 @@ class WatchesServiceImpl extends WatchesService {
     this._firebaseAuth,
     this._firestore,
   );
-  
+
   @override
   Stream<Either<Failures, List<WatchEntity>>> listWatches() async* {
     final user = _firebaseAuth.currentUser!;
@@ -27,7 +27,9 @@ class WatchesServiceImpl extends WatchesService {
         .map(
           (snapshot) => right<Failures, List<WatchEntity>>(
             snapshot.docs
-                .map((doc) => WatchDto.fromMap(doc.data()).toEntity())
+                .map(
+                  (doc) => WatchDto.fromMap(doc.data()).toEntity(),
+                )
                 .toList(),
           ),
         )
