@@ -9,17 +9,19 @@ class WatchButtonTextWidget extends HookWidget {
   final VoidCallback? onTap;
   final Color backgroundColor;
   final Color textColor;
+  final bool busy;
+
   const WatchButtonTextWidget({
     Key? key,
     required this.text,
     this.onTap,
     this.backgroundColor = AppColors.golden,
     this.textColor = Colors.white,
+    this.busy = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = useState<bool>(false);
     return Container(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(
@@ -47,20 +49,14 @@ class WatchButtonTextWidget extends HookWidget {
           borderRadius: const BorderRadius.all(
             Radius.circular(16),
           ),
-          onTap: onTap != null
-              ? () {
-                  isLoading.value = true;
-                  onTap!();
-                  isLoading.value = false;
-                }
-              : null,
+          onTap: onTap != null && !busy ? onTap! : null,
           child: Container(
             padding: const EdgeInsets.symmetric(
               vertical: 14,
               horizontal: 24,
             ),
             child: Center(
-              child: !isLoading.value
+              child: !busy
                   ? Text(
                       text,
                       style: GoogleFonts.poppins(
@@ -71,7 +67,13 @@ class WatchButtonTextWidget extends HookWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     )
-                  : const CircularProgressIndicator(color: Colors.white),
+                  : const SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    ),
             ),
           ),
         ),
