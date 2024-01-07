@@ -12,61 +12,59 @@ class WatchInputWidget extends HookWidget {
   final WatchFieldValidator? validator;
   final ValueChanged<String>? onChanged;
   final String label;
+  final int? maxLines;
   const WatchInputWidget({
     Key? key,
     required this.label,
     this.controller,
     this.validator,
     this.onChanged,
+    this.maxLines,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final textController = controller ?? useTextEditingController();
     final validationErrorNotifier = useState<String?>(null);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextFormField(
-          onChanged: (value) => _handleOnChanged(
-            value,
-            validationErrorNotifier,
-          ),
-          controller: textController,
-          showCursor: true,
-          cursorColor: AppColors.greyLighter,
+    return TextFormField(
+      maxLines: maxLines,
+      onChanged: (value) => _handleOnChanged(
+        value,
+        validationErrorNotifier,
+      ),
+      controller: textController,
+      showCursor: true,
+      cursorColor: AppColors.greyLighter,
+      style: GoogleFonts.poppins(
+        color: AppColors.greyLighter,
+      ),
+      decoration: InputDecoration(
+        label: Text(
+          label,
           style: GoogleFonts.poppins(
             color: AppColors.greyLighter,
           ),
-          decoration: InputDecoration(
-            label: Text(
-              label,
-              style: GoogleFonts.poppins(
-                color: AppColors.greyLighter,
-              ),
-            ),
-            error: _handleErrorWidget(validationErrorNotifier),
-            filled: true,
-            fillColor: Colors.white,
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.greyLighter,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: AppColors.greyLighter,
-              ),
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
+        ),
+        error: _handleErrorWidget(validationErrorNotifier),
+        filled: true,
+        fillColor: Colors.white,
+        border: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.greyLighter,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
           ),
         ),
-      ],
+        focusedBorder: const OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppColors.greyLighter,
+          ),
+          borderRadius: BorderRadius.all(
+            Radius.circular(8),
+          ),
+        ),
+      ),
     );
   }
 
