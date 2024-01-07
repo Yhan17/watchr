@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/domain/entities/watch_entity.dart';
@@ -15,10 +16,12 @@ class WatchCreateServiceImpl implements WatchCreateService {
   final FirebaseFirestore _firebaseFirestore;
   final WatchStorage _watchStorage;
   final Uuid _uuid;
+  final FirebaseAuth _firebaseAuth;
   const WatchCreateServiceImpl(
     this._firebaseFirestore,
     this._watchStorage,
     this._uuid,
+    this._firebaseAuth,
   );
   @override
   Future<Either<Failures, Unit>> saveWatchInFirestore(
@@ -30,6 +33,8 @@ class WatchCreateServiceImpl implements WatchCreateService {
 
       var dto = WatchDto.fromEntity(entity);
 
+      final user = _firebaseAuth.currentUser!;
+
       final path = await _watchStorage.uploadImage(
         uuid: uuid,
         image: file,
@@ -38,6 +43,7 @@ class WatchCreateServiceImpl implements WatchCreateService {
       dto = dto.copyWith(
         id: uuid,
         imageStoragePath: path,
+        userId: user.uid,
       );
 
       await _firebaseFirestore.watchesReference.doc(uuid).set(dto.toMap());

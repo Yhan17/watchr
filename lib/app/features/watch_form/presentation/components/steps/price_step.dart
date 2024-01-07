@@ -4,12 +4,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../../../../core/domain/entities/watch_entity.dart';
 import '../../../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../../../core/presentation/shared/utils/double_range_input_formatter.dart';
+import '../../../../../core/presentation/shared/utils/failure_snackbar_handler.dart';
 import '../../../../../core/presentation/shared/utils/number_range_input_formatter.dart';
 import '../../../../../core/presentation/shared/widgets/watch_button_text_widget.dart';
 import '../../../../../core/presentation/shared/widgets/watch_input_widget.dart';
+import '../../notifiers/submit_watch_state_notifier.dart';
 import '../../notifiers/watch_form_state_notifier.dart';
 import '../default_form_scaffold.dart';
 
@@ -26,6 +29,31 @@ class PriceStep extends HookConsumerWidget {
     );
     final quantity = useState<int>(0);
     final price = useState<double>(0);
+
+    final submitWatchNotifier = ref.watch(
+      submitWatchStateNotifierProvider.notifier,
+    );
+
+    ref.listen(
+      submitWatchStateNotifierProvider,
+      (_, state) {
+        state.whenOrNull(
+          loadFailure: (failure) => FailureSnackbarHandler.handleFailure(
+            failure,
+            context,
+          ),
+          loadSuccess: (_) {
+            Navigator.of(context, rootNavigator: true).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Watch Created'),
+              ),
+            );
+          },
+        );
+      },
+    );
+
     return DefaultFormScaffold(
       slivers: [
         SliverToBoxAdapter(
@@ -173,12 +201,46 @@ class PriceStep extends HookConsumerWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24).copyWith(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24,
+            ).copyWith(
               bottom: 32,
             ),
-            child: WatchButtonTextWidget(
-              onTap: canSubmit ? () {} : null,
-              text: 'Submit',
+            child: Consumer(
+              builder: (_, cRef, __) {
+                final state = cRef.watch(submitWatchStateNotifierProvider);
+                return WatchButtonTextWidget(
+                  busy: state.maybeWhen(
+                    loadInProgress: () => true,
+                    orElse: () => false,
+                  ),
+                  onTap: canSubmit
+                      ? () {
+                          final entity = WatchEntity(
+                            id: '',
+                            name: watchFormStateNotifier.last.name!,
+                            description: watchFormStateNotifier.last.desc!,
+                            price: double.parse(
+                              watchFormStateNotifier.last.price!,
+                            ),
+                            stockQuantity: int.parse(
+                              watchFormStateNotifier.last.quantity!,
+                            ),
+                            code: watchFormStateNotifier.last.code!,
+                            imageStoragePath: '',
+                            userId: '',
+                            createdAt: DateTime.now(),
+                            updatedAt: DateTime.now(),
+                          );
+                          submitWatchNotifier.createWatch(
+                            entity,
+                            watchFormStateNotifier.last.image!,
+                          );
+                        }
+                      : null,
+                  text: 'Submit',
+                );
+              },
             ),
           ),
         ],
