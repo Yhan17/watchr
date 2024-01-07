@@ -7,6 +7,8 @@ import 'watch_form_state.dart';
 class WatchFormStateNotifier extends StateNotifier<WatchFormState> {
   WatchFormStateNotifier() : super(WatchFormState.initial());
 
+  WatchFormState get last => state;
+
   void imageChange(File file) {
     state = state.copyWith(image: file);
   }

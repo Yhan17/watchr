@@ -80,8 +80,8 @@ class WatchDto {
       'code': code,
       'image_storage_path': imageStoragePath,
       'user_id': userId,
-      'created_at': createdAt.millisecondsSinceEpoch,
-      'updated_at': updatedAt.millisecondsSinceEpoch,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 

@@ -1,10 +1,10 @@
 import '../../../features/details/presentation/watch_details_page.dart';
-import '../../../features/form/presentation/form_page.dart';
 import '../../../features/home/presentation/home_page.dart';
 import '../../../features/login/presentation/login_page.dart';
 import '../../../features/onboarding/presentation/onboarding_page.dart';
 import '../../../features/profile/presentation/profile_page.dart';
 import '../../../features/splash/presentation/splash_page.dart';
+import '../../../features/watch_form/presentation/form_page.dart';
 import '../router/animations/slide_transition_animation.dart';
 import '../router/config.dart';
 import '../router/page_router.dart';

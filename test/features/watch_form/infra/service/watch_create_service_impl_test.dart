@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +16,10 @@ import 'package:watchr/app/features/watch_form/infra/service/watch_create_servic
 class MockUuid extends Mock implements Uuid {}
 
 class MockFirestore extends Mock implements FirebaseFirestore {}
+
+class MockUser extends Mock implements User {}
+
+class MockFirebaseAuth extends Mock implements FirebaseAuth {}
 
 class MockFile extends Mock implements File {}
 
@@ -35,6 +40,8 @@ void main() {
     late MockCollectionReference mockCollectionReference;
     late MockDocumentReference mockDocumentReference;
     late MockFile mockFile;
+    late MockFirebaseAuth mockFirebaseAuth;
+    late MockUser mockUser;
 
     setUp(() {
       mockFirestore = MockFirestore();
@@ -43,12 +50,17 @@ void main() {
       mockCollectionReference = MockCollectionReference();
       mockDocumentReference = MockDocumentReference();
       mockFile = MockFile();
+      mockFirebaseAuth = MockFirebaseAuth();
+      mockUser = MockUser();
 
       watchCreateService = WatchCreateServiceImpl(
         mockFirestore,
         mockWatchStorage,
         mockUuid,
+        mockFirebaseAuth,
       );
+      when(() => mockFirebaseAuth.currentUser).thenReturn(mockUser);
+      when(() => mockUser.uid).thenReturn('');
       when(
         () => mockWatchStorage.uploadImage(
           uuid: 'mocked_uuid',
