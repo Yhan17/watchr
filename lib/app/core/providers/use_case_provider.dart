@@ -1,5 +1,6 @@
 import 'package:riverpod/riverpod.dart';
 
+import '../../features/home/domain/usecase/delete_watch_use_case.dart';
 import '../../features/home/domain/usecase/watches_list_use_case.dart';
 import '../../features/watch_form/domain/usecase/watch_create_use_case.dart';
 import '../../features/watch_form/domain/usecase/watch_edit_use_case.dart';
@@ -48,6 +49,11 @@ final verifyIfLoggedUseCaseProvider = Provider.autoDispose(
 final signOutUseCaseProvider = Provider.autoDispose(
   (ref) => SignOutUseCase(
     ref.read(authServiceProvider),
+  ),
+);
+final deleteWatchUseCaseProvider = Provider.autoDispose(
+  (ref) => DeleteWatchUseCase(
+    ref.read(deleteWatchServiceProvider),
   ),
 );
 
