@@ -1,9 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../domain/entities/user_entity.dart';
 import '../../domain/failures/failures.dart';
-import 'package:dartz/dartz.dart';
-
 import '../../domain/services/auth_service.dart';
 import '../../domain/value_objects/email_address/email_address_value.dart';
 import '../../domain/value_objects/password/password_value.dart';
@@ -80,6 +79,31 @@ class AuthServiceImpl implements AuthService {
       return left(failure);
     } catch (_) {
       return left(Failures.unknown);
+    }
+  }
+
+  @override
+  Future<Option<User>> getCurrentUser() async {
+    try {
+      final firebaseUser = _firebaseAuth.currentUser;
+      if (firebaseUser == null) {
+        return none();
+      }
+
+      return some(firebaseUser);
+    } catch (_) {
+      return none();
+    }
+  }
+
+  @override
+  Future<Option<Unit>> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+
+      return some(unit);
+    } catch (_) {
+      return none();
     }
   }
 }

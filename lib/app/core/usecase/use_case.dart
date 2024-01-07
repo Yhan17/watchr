@@ -24,3 +24,5 @@ abstract class UseCaseStream<F extends Failures, Type, Params> {
 class NoParams {
   const NoParams();
 }
+
+const noParams = NoParams();

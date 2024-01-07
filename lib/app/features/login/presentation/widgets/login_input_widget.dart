@@ -12,12 +12,14 @@ class WatchLoginInputWidget extends HookWidget {
   final LoginFieldValidator? validator;
   final ValueChanged<String>? onChanged;
   final String label;
+  final bool obscureText;
   const WatchLoginInputWidget({
     Key? key,
     required this.label,
     this.controller,
     this.validator,
     this.onChanged,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
@@ -38,6 +40,7 @@ class WatchLoginInputWidget extends HookWidget {
           style: GoogleFonts.poppins(
             color: AppColors.innerInputColor,
           ),
+          obscureText: obscureText,
           decoration: InputDecoration(
             label: Text(
               label,
@@ -89,7 +92,7 @@ class WatchLoginInputWidget extends HookWidget {
     }
 
     return Text(
-      'o campo deve ter no mínimo 6 caracteres',
+      validationError.value!,
       style: GoogleFonts.poppins(
         color: AppColors.darkOrange,
       ),
