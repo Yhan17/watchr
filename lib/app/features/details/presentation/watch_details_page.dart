@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/domain/entities/watch_entity.dart';
 import '../../../core/presentation/routes/app_routes.dart';
+import '../../../core/presentation/routes/params/form_params.dart';
 import '../../../core/presentation/shared/common/app_spacing.dart';
 import '../../../core/presentation/shared/theme/app_colors.dart';
 import '../../../core/presentation/shared/widgets/watch_button_text_widget.dart';
@@ -185,7 +186,7 @@ class _DetailsGreenSideContent extends StatelessWidget {
                       onTap: () {
                         AppRoutes.form.push(
                           context,
-                          arguments: entity,
+                          arguments: FormParams(entity),
                         );
                       },
                     ),

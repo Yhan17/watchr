@@ -7,7 +7,13 @@ import '../common/filter_list.dart';
 import '../widgets/filter_button_widget.dart';
 
 class FilterCardComponent extends HookWidget {
-  const FilterCardComponent({Key? key}) : super(key: key);
+  final FilterList selectedFilter;
+  final ValueChanged<FilterList> onTap;
+  const FilterCardComponent({
+    Key? key,
+    required this.selectedFilter,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +43,12 @@ class FilterCardComponent extends HookWidget {
                       shrinkWrap: true,
                       itemBuilder: (_, index) {
                         final filter = filterList[index];
-                        return FilterButtonWidget(
-                          icon: filter.icon,
+                        return GestureDetector(
+                          onTap: () => onTap(filter),
+                          child: FilterButtonWidget(
+                            isSelected: selectedFilter.name == filter.name,
+                            icon: filter.icon,
+                          ),
                         );
                       },
                       separatorBuilder: (_, index) => AppSpacing.horizontal(
