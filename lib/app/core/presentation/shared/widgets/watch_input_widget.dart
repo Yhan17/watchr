@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -13,6 +14,8 @@ class WatchInputWidget extends HookWidget {
   final ValueChanged<String>? onChanged;
   final String label;
   final int? maxLines;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputType? inputType;
   const WatchInputWidget({
     Key? key,
     required this.label,
@@ -20,6 +23,8 @@ class WatchInputWidget extends HookWidget {
     this.validator,
     this.onChanged,
     this.maxLines,
+    this.inputFormatters,
+    this.inputType,
   }) : super(key: key);
 
   @override
@@ -33,6 +38,8 @@ class WatchInputWidget extends HookWidget {
         validationErrorNotifier,
       ),
       controller: textController,
+      inputFormatters: inputFormatters,
+      keyboardType: inputType,
       showCursor: true,
       cursorColor: AppColors.greyLighter,
       style: GoogleFonts.poppins(
