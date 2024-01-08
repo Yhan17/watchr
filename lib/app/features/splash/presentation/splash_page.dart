@@ -30,9 +30,12 @@ class SplashPage extends HookConsumerWidget {
       (_, state) {
         splashDebouncer.run(() {
           if (state != null) {
-            AppRoutes.home.pushAndResetStack(context, arguments: noArgs);
-          } else {
-            AppRoutes.onboarding.pushAndResetStack(context, arguments: noArgs);
+            if (state.isSome()) {
+              AppRoutes.home.pushAndResetStack(context, arguments: noArgs);
+            } else {
+              AppRoutes.onboarding
+                  .pushAndResetStack(context, arguments: noArgs);
+            }
           }
         });
       },
@@ -42,18 +45,15 @@ class SplashPage extends HookConsumerWidget {
     return AnnotatedRegion(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        body: Hero(
-          tag: 'button-animation',
-          child: Container(
-            color: AppColors.golden,
-            child: Center(
-              child: SizedBox(
-                height: size,
-                width: size,
-                child: Lottie.asset(
-                  AppAnimations.animations,
-                  animate: true,
-                ),
+        body: Container(
+          color: AppColors.golden,
+          child: Center(
+            child: SizedBox(
+              height: size,
+              width: size,
+              child: Lottie.asset(
+                AppAnimations.animations,
+                animate: true,
               ),
             ),
           ),

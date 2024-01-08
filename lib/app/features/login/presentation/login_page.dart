@@ -133,21 +133,24 @@ class _LoginPageMainContent extends HookConsumerWidget {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    WatchButtonIconWidget(
-                      icon: Icons.arrow_forward_ios_rounded,
-                      busy: state.maybeWhen(
-                        loadInProgress: () => true,
-                        orElse: () => false,
+                    Hero(
+                      tag: 'button-animation',
+                      child: WatchButtonIconWidget(
+                        icon: Icons.arrow_forward_ios_rounded,
+                        busy: state.maybeWhen(
+                          loadInProgress: () => true,
+                          orElse: () => false,
+                        ),
+                        onTap: formState.loginCanSubmit
+                            ? () async {
+                                signInEmailPasswordNotifier
+                                    .signInEmailAndPassword(
+                                  loginFormStateNotifier.last.email,
+                                  loginFormStateNotifier.last.password,
+                                );
+                              }
+                            : null,
                       ),
-                      onTap: formState.loginCanSubmit
-                          ? () async {
-                              signInEmailPasswordNotifier
-                                  .signInEmailAndPassword(
-                                loginFormStateNotifier.last.email,
-                                loginFormStateNotifier.last.password,
-                              );
-                            }
-                          : null,
                     ),
                   ],
                 );
