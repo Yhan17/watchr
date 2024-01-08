@@ -1,4 +1,4 @@
-name: Flutter Build
+name: Build and Test iOS
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout Repository
@@ -17,14 +17,15 @@ jobs:
         uses: subosito/flutter-action@v2.12.0
         with:
           channel: "stable"
+
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk
+      - name: Build iOS
+        run: flutter build ios --release
 
       - name: Archive Artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/
+          name: ios-build
+          path: build/ios
