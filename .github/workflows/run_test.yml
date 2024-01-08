@@ -31,7 +31,7 @@ jobs:
       - uses: dorny/test-reporter@v1.7.0
         with:
           name: 'Unit Test results'
-          path: 'test-results.json'
+          path: '**/test-results.json'
           reporter: 'flutter-json'
           list-suites: 'all'
           list-tests: 'all'
