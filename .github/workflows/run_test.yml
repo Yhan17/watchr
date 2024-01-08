@@ -42,3 +42,10 @@ jobs:
       - uses: VeryGoodOpenSource/very_good_coverage@v2.2.0
         with:
           min_coverage: 70
+      - uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
