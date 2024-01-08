@@ -21,13 +21,13 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
 
-      - name: Build iOS
-        if: success() 
-        run: flutter build ios --release
+      # - name: Build iOS
+      #   if: success() 
+      #   run: flutter build ios --release
 
-      - name: Archive Artifacts
-        if: success() 
-        uses: actions/upload-artifact@v2
-        with:
-          name: ios-build
-          path: build/ios
+      # - name: Archive Artifacts
+      #   if: success() 
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ios-build
+      #     path: build/ios
