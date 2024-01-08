@@ -1,6 +1,8 @@
 # WatchR: Uma Jornada pelos Relógios
 
-🚨**[Documentação Adicional](https://app.gitbook.com/o/4CgcllCc5Im8cJEIISnF/s/OTPfHEoCn7C6ntFY3QNX/): Uma Ferramenta Inestimável** 🚨
+🚨
+**[Documentação Adicional](https://yhans-organization.gitbook.io/watch-registration-application/): Uma Ferramenta Inestimável** 
+🚨
 
 Este aplicativo Flutter, batizado de WatchR, não é apenas mais um projeto; é uma experiência completa de gerenciamento de relógios que combina funcionalidades práticas com uma interface amigável. Cada aspecto do desenvolvimento foi cuidadosamente considerado para oferecer aos usuários uma solução única e envolvente.
 
@@ -57,4 +59,4 @@ A decisão de desenvolver um aplicativo de cadastro de relógios foi baseada na 
 
 ## Documentação Adicional
 
-Para mais detalhes, consulte a [documentação completa](https://app.gitbook.com/o/4CgcllCc5Im8cJEIISnF/s/OTPfHEoCn7C6ntFY3QNX/).
+Para mais detalhes, consulte a [documentação completa](https://yhans-organization.gitbook.io/watch-registration-application/).
