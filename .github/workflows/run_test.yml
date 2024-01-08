@@ -27,6 +27,7 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter test --coverage
+      - run: mkdir reports
       - run: flutter test --machine --reporter=json > reports/test-results.json
       - uses: dorny/test-reporter@v1.7.0
         with:
