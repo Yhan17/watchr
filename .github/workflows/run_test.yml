@@ -27,11 +27,11 @@ jobs:
           channel: "stable"
       - run: flutter pub get
       - run: flutter test --coverage
-      - run: flutter test --machine > test-results.json
+      - run: flutter test --machine --reporter=json > reports/test-results.json
       - uses: dorny/test-reporter@v1.7.0
         with:
           name: 'Unit Test results'
-          path: '**/test-results.json'
+          path: 'reports/test-results.json'
           reporter: 'flutter-json'
           list-suites: 'all'
           list-tests: 'all'
@@ -42,10 +42,3 @@ jobs:
       - uses: VeryGoodOpenSource/very_good_coverage@v2.2.0
         with:
           min_coverage: 70
-      - uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
-        with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
