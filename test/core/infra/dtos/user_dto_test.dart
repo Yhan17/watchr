@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:watchr/app/core/domain/entities/user_entity.dart';
-import 'package:watchr/app/core/infra/dtos/user/user_dto.dart';
+import 'package:watchr/app/core/infra/dtos/user_dto.dart';
 
 class MockUser extends Mock implements User {}
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-typedef PageBuilder<ArgType> = Widget Function(ArgType args);
+typedef PageBuilder = Widget Function(dynamic args);
 
 abstract class RouteTransition {
   Duration get transitionDuration;
@@ -17,7 +17,7 @@ abstract class RouteTransition {
 class AppPageRoute<ArgType> {
   final String path;
 
-  final PageBuilder<ArgType> pageBuilder;
+  final PageBuilder pageBuilder;
   final RouteTransition? routeTransition;
   final bool useRootNavigation;
 

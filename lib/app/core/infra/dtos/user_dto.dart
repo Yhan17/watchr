@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../domain/entities/user_entity.dart';
+import '../../domain/entities/user_entity.dart';
 
 @immutable
 class UserDto {

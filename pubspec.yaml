@@ -25,6 +25,7 @@ dependencies:
   equatable: ^2.0.5  # Facilita a implementação de métodos `equals` e `hashCode`
   rxdart: ^0.27.7  # Programação reativa para Dart
   jwt_decoder: ^2.0.1 #Decoder JWT
+  image_picker: ^1.0.6 #Picker Images
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +34,11 @@ dev_dependencies:
   freezed: ^2.4.6  # Gerador de código para imutabilidade em Dart
   mocktail: ^1.0.2  # Ferramenta para criar mocks de forma concisa
   flutter_launcher_icons: ^0.13.1  # Ferramenta para definir ícones de aplicativos Flutter
+  build_runner: ^2.4.6
 
 flutter:
   uses-material-design: true  # Indica o uso do Material Design no aplicativo
+
+  assets:
+    - assets/animations/
+    - assets/images/

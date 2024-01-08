@@ -4,10 +4,10 @@ import '../page_router.dart';
 
 class SlideTransitionAnimation extends RouteTransition {
   @override
-  Duration get reverseTransitionDuration => const Duration(seconds: 10);
+  Duration get reverseTransitionDuration => const Duration(seconds: 1);
 
   @override
-  Duration get transitionDuration => const Duration(seconds: 10);
+  Duration get transitionDuration => const Duration(seconds: 1);
 
   @override
   Widget transitionBuilder(
