@@ -34,11 +34,6 @@ jobs:
           name: 'Unit Test results'
           path: 'reports/test-results.json'
           reporter: 'flutter-json'
-          list-suites: 'all'
-          list-tests: 'all'
-          max-annotations: '10'
-          fail-on-error: 'true'
-          working-directory: ${{ github.workspace }}
           token: ${{ github.token }}
       - uses: VeryGoodOpenSource/very_good_coverage@v2.2.0
         with:
